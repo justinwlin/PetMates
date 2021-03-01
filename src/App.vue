@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Home from "./views/Home";
+import Home from "./views/ShelterHome";
 export default {
   name: "App",
   components: { Home },
