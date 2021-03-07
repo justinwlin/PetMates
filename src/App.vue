@@ -1,14 +1,26 @@
 <template>
   <div id="app">
-    <Home></Home>
+    <div v-if="!loginState">
+      <LoginRegister></LoginRegister>
+    </div>
+    <div v-else>
+      <ShelterHome></ShelterHome>
+    </div>
   </div>
 </template>
 
 <script>
-import Home from "./views/Home";
+import ShelterHome from "./views/ShelterHome";
+import LoginRegister from "./views/LoginRegister";
+
 export default {
   name: "App",
-  components: { Home },
+  components: { ShelterHome, LoginRegister },
+  computed: {
+    loginState() {
+      return this.$store.getters.loggedInState;
+    },
+  },
 };
 </script>
 
