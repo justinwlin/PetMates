@@ -78,13 +78,13 @@ export default {
   },
   methods: {
     onFileChanged (event) {
-      this.selectedFile = event.target.files[0]
+      this.selectedFile = event.target.files[0];
     },
     onUpload() {
       var form = document.getElementById('petForm');
       var formData = new FormData(form);
-      formData.append('petImage', this.selectedFile, this.selectedFile.name)
-      this.axios.post('posts endpoint here', formData)
+      formData.append('petImage', this.selectedFile, this.selectedFile.name);
+      this.axios.post('posts endpoint here', formData);
     }
   }
 };
