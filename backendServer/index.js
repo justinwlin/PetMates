@@ -15,8 +15,6 @@ app.get('/', (req, res) => {
 /*==========
 BASE ROUTE
 ============*/
-
-
 app.listen(process.env.PORT || 3000, () => {
     console.log("Server is running");
 });
