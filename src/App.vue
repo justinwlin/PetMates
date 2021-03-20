@@ -4,18 +4,19 @@
       <LoginRegister></LoginRegister>
     </div>
     <div v-else>
-      <ShelterHome></ShelterHome>
+      <PetForm></PetForm>
     </div>
   </div>
 </template>
 
 <script>
-import ShelterHome from "./views/ShelterHome";
+//import ShelterHome from "./views/ShelterHome";
 import LoginRegister from "./views/LoginRegister";
+import PetForm from "./views/PetForm";
 
 export default {
   name: "App",
-  components: { ShelterHome, LoginRegister },
+  components: { LoginRegister, PetForm },
   computed: {
     loginState() {
       return this.$store.getters.loggedInState;
