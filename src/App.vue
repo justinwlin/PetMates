@@ -10,7 +10,6 @@
 </template>
 
 <script>
-//import ShelterHome from "./views/ShelterHome";
 import LoginRegister from "./views/LoginRegister";
 import PetForm from "./views/PetForm";
 
