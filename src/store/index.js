@@ -8,7 +8,8 @@ export default createStore({
   state: {
     loginUserState: false,
     profileName: "",
-    email: ""
+    email: "",
+    uid: "",
   },
   mutations: {
     ...authmutations

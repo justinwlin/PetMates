@@ -3,6 +3,7 @@ export default {
         state.loginUserState = true;
         state.profileName = payload.name;
         state.email = payload.email;
+        state.uid = payload.uid;
         console.log(state);
     }
 }

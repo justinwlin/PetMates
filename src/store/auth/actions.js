@@ -14,7 +14,8 @@ export default {
         const doc = await (await usersdb.doc(usercred.user.uid).get()).data();
         commit("loginMutation", {
             name: doc.name,
-            email: payload.username
+            email: payload.username,
+            uid: usercred.user.uid
         });
     },
 
@@ -48,7 +49,8 @@ export default {
         });
         commit("loginMutation", {
             name: payload.name,
-            email: payload.username
+            email: payload.username,
+            uid: userCred.user.uid
         });
     }
 };
