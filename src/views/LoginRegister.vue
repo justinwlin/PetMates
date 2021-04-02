@@ -9,7 +9,7 @@
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :span="50">
-            <el-input placeholder="Username" v-model="loginUsername"></el-input>
+            <el-input placeholder="Email" v-model="loginUsername"></el-input>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -36,9 +36,14 @@
         <el-row type="flex" justify="center">
           <el-col :span="50">
             <el-input
-              placeholder="Username"
-              v-model="registerUsername"
+              placeholder="Preferred Name"
+              v-model="registerName"
             ></el-input>
+          </el-col>
+        </el-row>
+        <el-row type="flex" justify="center">
+          <el-col :span="50">
+            <el-input placeholder="Email" v-model="registerUsername"></el-input>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -77,13 +82,34 @@ export default {
       registerUsername: "",
       registerPassword: "",
       registerPasswordConfirm: "",
+      registerName: "",
     };
   },
   methods: {
-    login() {
-      this.$store.commit("loginMutation");
+    async login() {
+      try {
+        await this.$store.dispatch("loginUser", {
+          username: this.loginUsername,
+          password: this.loginPassword,
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
-    register() {},
+    async register() {
+      if (
+        this.registerPassword !== this.registerPasswordConfirm ||
+        this.registerName == ""
+      ) {
+        alert("passwords do not match or info was missing");
+        return;
+      }
+      this.$store.dispatch("registerUser", {
+        password: this.registerPassword,
+        username: this.registerUsername,
+        name: this.registerName,
+      });
+    },
   },
 };
 </script>

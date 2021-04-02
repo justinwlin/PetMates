@@ -7,11 +7,9 @@
             "https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq",
             "https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq"
         ],
-        "birthday": {
-            "month": 1,
-            "day": 18,
-            "year": 2021
-        },
+        "month": 1,
+        "day": 18,
+        "year": 2021,
         "gender": "male",
         "description": "i'm a dog",
         "neutered": false,
@@ -20,17 +18,15 @@
     },
     {
         "petID": 1,
-        "shelterID": 100,
+        "shelterID": 0,
         "typePet": "dog",
         "image": [
             "https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq",
             "https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq"
         ],
-        "birthday": {
-            "month": 1,
-            "day": 18,
-            "year": 2021
-        },
+        "month": 1,
+        "day": 18,
+        "year": 2021,
         "gender": "male",
         "description": "i'm a dog",
         "neutered": false,

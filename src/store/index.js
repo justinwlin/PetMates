@@ -1,21 +1,23 @@
 import { createStore } from 'vuex';
+import authmutations from './auth/mutations';
+import authactions from './auth/actions';
+import authgetter from './auth/getters';
+import dbactions from './db/actions';
 
 export default createStore({
   state: {
-    loginUserState: false
+    loginUserState: false,
+    profileName: "",
+    email: ""
   },
   mutations: {
-    loginMutation(state) {
-      console.log('login');
-      state.loginUserState = true;
-    }
+    ...authmutations
   },
   actions: {
+    ...authactions, ...dbactions
   },
   getters: {
-    loggedInState(state) {
-      return state.loginUserState;
-    }
+    ...authgetter
   },
   modules: {
   }
