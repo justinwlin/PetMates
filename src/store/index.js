@@ -6,7 +6,7 @@ import dbactions from './db/actions';
 
 export default createStore({
   state: {
-    loginUserState: false,
+    loginUserState: true,
     profileName: "",
     email: "",
     uid: "",

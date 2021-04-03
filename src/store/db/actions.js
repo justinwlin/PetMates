@@ -1,19 +1,25 @@
-import { petsdb, storesdb } from "../../firebase/config";
+import { petsdb, storesdb, imgstore } from "../../firebase/config";
 export default {
-    async addPets(ctx, { day, description, gender, month, neutered, notes, petID, shelterID, specialNeeds, year }) {
-        await petsdb.add({
+    async addPets(ctx, { day, description, name, gender, month, neutered, notes, petID, shelterID, specialNeeds, year, image }) {
+        const res = await petsdb.add({
             day: day,//Int
             description: description,//string
             gender: gender,//string
-            images: null,//array of url images?
+            image: null,//array of url images?
             month: month,//int
             neutered: neutered,//boolean
             notes: notes,//string
             petID: petID,//int
             shelterID: shelterID,//it
             specialNeeds: specialNeeds,//string
-            year: year//int
+            year: year,//int
+            name: name
         });
+        let filePath = 'pets/' + res.id + image.name;
+        let imgRef = imgstore.ref().child(filePath);
+        await imgRef.put(image);
+        let downloadUrl = await imgRef.getDownloadURL();
+        await petsdb.doc(res.id).update({ image: downloadUrl });
         return;
     },
 

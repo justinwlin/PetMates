@@ -13,29 +13,32 @@
     <!-- Pet Form -->
     <form id="petForm">
       <!-- Pet Image Upload -->
-      <p>
+      <div>
         Pet Image Upload
-        <input type="file" @change="onFileChanged">
-      </p>
+        <input type="file" @change="onFileChanged" />
+      </div>
+      <div>
+        <img :src="imagebase64" height="150" />
+      </div>
       <!-- Pet Age -->
-      <p>
-        <input v-model="petAge" number placeholder="Pet age: ">
-      </p>
+      <div>
+        <input v-model="petAge" number placeholder="Pet age: " />
+      </div>
       <!-- Pet Breed -->
-      <p>
-        <input v-model="petBreed" placeholder="Pet Breed: ">
-      </p>
+      <div>
+        <input v-model="petBreed" placeholder="Pet Breed: " />
+      </div>
       <!-- Pet Gender -->
-      <p>
+      <div>
         <select v-model="petGender">
           <option disabled value="">Please select one</option>
           <option>male</option>
           <option>female</option>
         </select>
-      </p>
+      </div>
       <!-- Pet Description -->
       <p>
-        <input v-model="petDescription" placeholder="Pet Description: ">
+        <input v-model="petDescription" placeholder="Pet Description: " />
       </p>
       <!-- Pet Neutered -->
       <p>
@@ -46,16 +49,16 @@
         </select>
       </p>
       <!-- Pet Special Needs -->
-      <p>
-        <input v-model="petNeeds" placeholder="Pet Special Needs: ">
-      </p>
+      <div>
+        <input v-model="petNeeds" placeholder="Pet Special Needs: " />
+      </div>
       <!-- Pet Notes -->
-      <p>
-        <input v-model="petNotes" placeholder="Pet Notes: ">
-      </p>
-      <p>
+      <div>
+        <input v-model="petNotes" placeholder="Pet Notes: " />
+      </div>
+      <div>
         <button type="submit" @click="onUpload">Submit</button>
-      </p>
+      </div>
     </form>
   </div>
 </template>
@@ -66,27 +69,47 @@ export default {
   components: {},
   data() {
     return {
-      petGender      : '',
-      petAge         : '',
-      petBreed       : '',
-      petDescription : '',
-      petNeutered    : 'neutered',
-      petNeeds       : '',
-      petNotes       : '',
-      selectedFile   : null
-    }
+      petGender: "",
+      petAge: "",
+      petBreed: "",
+      petDescription: "",
+      petNeutered: "neutered",
+      petNeeds: "",
+      petNotes: "",
+      selectedFile: null,
+      imagebase64: "",
+    };
   },
   methods: {
-    onFileChanged (event) {
+    onFileChanged(event) {
       this.selectedFile = event.target.files[0];
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        this.imagebase64 = fileReader.result;
+      });
+      fileReader.readAsDataURL(this.selectedFile);
     },
     onUpload() {
-      var form = document.getElementById('petForm');
-      var formData = new FormData(form);
-      formData.append('petImage', this.selectedFile, this.selectedFile.name);
-      this.axios.post('posts endpoint here', formData);
-    }
-  }
+      if (!this.selectedFile) {
+        alert("please submit an image");
+        return;
+      }
+      this.$store.dispatch("addPets", {
+        day: 1, //Int
+        description: this.petDescription, //string
+        gender: this.petGender, //string
+        image: this.selectedFile, //array of url images?
+        month: 1, //int
+        neutered: this.petNeutered, //boolean
+        notes: this.petNotes, //string
+        petID: Math.floor(Math.random() * 1000), //int
+        shelterID: 1, //it
+        specialNeeds: "", //string
+        year: 2000, //int
+        name: "randomName",
+      });
+    },
+  },
 };
 </script>
 
