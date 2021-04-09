@@ -57,7 +57,7 @@
         <input v-model="petNotes" placeholder="Pet Notes: " />
       </div>
       <div>
-        <button type="submit" @click="onUpload">Submit</button>
+        <button @click="onUpload">Submit</button>
       </div>
     </form>
   </div>
