@@ -10,7 +10,8 @@ export default createStore({
     profileName: "",
     email: "",
     uid: "",
-    iscustomer: true
+    iscustomer: true,
+    selectedShelter: 1
   },
   mutations: {
     ...authmutations
