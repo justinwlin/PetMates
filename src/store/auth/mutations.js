@@ -4,6 +4,7 @@ export default {
         state.profileName = payload.name;
         state.email = payload.email;
         state.uid = payload.uid;
-        console.log(state);
+        state.iscustomer = payload.customer
+        console.log(state)
     }
 }

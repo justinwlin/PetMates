@@ -15,7 +15,8 @@ export default {
         commit("loginMutation", {
             name: doc.name,
             email: payload.username,
-            uid: usercred.user.uid
+            uid: usercred.user.uid,
+            customer: doc.customer
         });
     },
 
