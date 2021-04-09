@@ -108,6 +108,7 @@ export default {
         password: this.registerPassword,
         username: this.registerUsername,
         name: this.registerName,
+        favoritedPets: []
       });
     },
   },
