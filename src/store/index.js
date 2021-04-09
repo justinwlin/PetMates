@@ -11,7 +11,7 @@ export default createStore({
     email: "",
     uid: "",
     iscustomer: true,
-    selectedShelter: 1
+    selectedShelter: 1 //shelterID
   },
   mutations: {
     ...authmutations
