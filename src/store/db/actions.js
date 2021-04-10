@@ -23,8 +23,7 @@ export default {
         return;
     },
 
-    async addStores(ctx, { shelterID, name, description, state, city, street, zipcode, likes, dislike, images, haveDogs, haveCats }) {
-        console.log('test');
+    async addStores(ctx, { shelterID, name, description, state, city, street, zipcode, likes, dislike, image }) {
         await storesdb.add({
             shelterID: shelterID,//number
             name: name,//string
@@ -35,9 +34,7 @@ export default {
             zipcode: zipcode,//number
             likes: likes,//number
             dislike: dislike,//number
-            images: images,//array of strings
-            haveCats: haveCats,//boolean
-            haveDogs: haveDogs//boolean
+            image: image // a string url
         });
         return;
         // EX way to write to the store
@@ -51,9 +48,7 @@ export default {
         //   zipcode: 92620,
         //   likes: 10,
         //   dislike: 10,
-        //   images: [],
-        //   haveCats: true,
-        //   haveDogs: false,
+        //   images: https://eximageurl.com
         // });
     }
 };
