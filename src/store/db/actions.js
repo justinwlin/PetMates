@@ -64,5 +64,9 @@ export default {
 
     async getPets(ctx, { shelterID }) {
         return await petsdb.where( 'shelterID', '==', shelterID).get();
+    },
+
+    async getShelter(ctx, { shelterID }) {
+        return await storesdb.where( 'shelterID', '==', shelterID).get();
     }
 };

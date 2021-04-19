@@ -13,13 +13,24 @@
     <!-- SHELTER INFO -->
     <el-row class="shelterTools">
       <div>
+        <p>Shelter Name</p>
+        {{ shelterData[name] }}
+      </div>
+      <div>
         <p>Shelter Image</p>
+    
       </div>
       <div>
         <p>Shelter Description</p>
+        {{ shelterData[description] }}
       </div>
       <div>
-        <p>Shelter Like/Dislike</p>
+        <p>Shelter Like</p>
+        {{ shelterData[likes] }}
+      </div>
+       <div>
+        <p>Shelter Dislike</p>
+        {{ shelterData[dislike] }}
       </div>
     </el-row>
 
@@ -48,7 +59,6 @@
       </ul>
     </div>
 
-
   </div>
 </template>
 
@@ -59,19 +69,33 @@ export default {
   data() {
     return {
       petData: [],
+      shelterData: {
+        name: "",
+        description: "",
+        likes: "",
+        dislike: ""
+      },
       shelterDescription: "",
       removeThisPetID: "",
     }
   },
   created() {
     try {
-        const doc = await this.$store.dispatch("getPets", {
+        const petDoc = await this.$store.dispatch("getPets", {
           shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
         });
-        if (!doc.exists) {
-          console.log('No such document!');
+        const shelterDoc = await this.$store.dispatch("getShelter", {
+          shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        });
+        if (!petDoc.exists) {
+          console.log('No such pet document!');
         } else {
-          this.petData = doc.data();
+          this.petData = petDoc.data();
+        }
+        if (!shelterDoc.exists) {
+          console.log('No such shelter document!');
+        } else {
+          this.shelterData = shelterDoc.data();
         }
       } catch (err) {
         console.log(err);
@@ -88,7 +112,7 @@ export default {
         petID: this.removeThisPetID
       });
     },
-    
+
     async changeDescription() {
       await this.$store.dispatch("updateShelterDescription", {
         shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
