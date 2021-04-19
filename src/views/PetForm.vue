@@ -100,7 +100,7 @@ export default {
           day:          parseInt(this.petAgeDay),
           description:  this.petDescription,
           gender:       this.petGender,
-          images:       this.selectedFile,
+          image:        this.selectedFile,
           month:        parseInt(this.petAgeMonth),
           neutered:     this.petNeutered,
           notes:        this.petNotes,

@@ -52,17 +52,11 @@ export default {
         // });
     },
 
-    async updateShelterDescription(ctx, { shelterID, description }) {
-        await storesdb.where( 'shelterID', '==', shelterID).update({description: description});
-        return;
+    async getPetByPetID(ctx, { petID }) {
+        return await petsdb.where( 'petID', '==', petID).get();
     },
 
-    async removePet(ctx, { petID }) {
-        await petsdb.where( 'petID', '==', petID).delete();
-        return;
-    },
-
-    async getPets(ctx, { shelterID }) {
+    async getPetsInShelter(ctx, { shelterID }) {
         return await petsdb.where( 'shelterID', '==', shelterID).get();
     },
 

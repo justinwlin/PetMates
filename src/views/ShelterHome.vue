@@ -11,10 +11,10 @@
     </div>
 
     <!-- SHELTER INFO -->
-    <el-row class="shelterTools">
+    <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">>
       <div>
         <p>Shelter Name</p>
-        {{ shelterData[name] }}
+        {{ shelter.name }}
       </div>
       <div>
         <p>Shelter Image</p>
@@ -22,15 +22,15 @@
       </div>
       <div>
         <p>Shelter Description</p>
-        {{ shelterData[description] }}
+        {{ shelter.description }}
       </div>
       <div>
         <p>Shelter Like</p>
-        {{ shelterData[likes] }}
+        {{ shelter.likes }}
       </div>
        <div>
         <p>Shelter Dislike</p>
-        {{ shelterData[dislike] }}
+        {{ shelter.dislike }}
       </div>
     </el-row>
 
@@ -69,37 +69,35 @@ export default {
   data() {
     return {
       petData: [],
-      shelterData: {
-        name: "",
-        description: "",
-        likes: "",
-        dislike: ""
-      },
+      shelterData: [],
       newDescription: "",
       removeThisPetID: "",
     }
   },
   created() {
-    try {
-        const petDoc = this.$store.dispatch("getPets", {
-          shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+    (async () => {
+      const petSnapshot = await this.$store.dispatch("getPetsInShelter", {
+        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+      });
+      const shelterSnapshot = await this.$store.dispatch("getShelter", {
+        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+      });
+
+      if (petSnapshot.empty) {
+        console.log('No such pet document!');
+      } else {
+        petSnapshot.forEach(doc => {
+          this.petData.push(doc.data());
         });
-        const shelterDoc = this.$store.dispatch("getShelter", {
-          shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
-        });
-        if (!petDoc.exists) {
-          console.log('No such pet document!');
-        } else {
-          this.petData = petDoc.data();
-        }
-        if (!shelterDoc.exists) {
-          console.log('No such shelter document!');
-        } else {
-          this.shelterData = shelterDoc.data();
-        }
-      } catch (err) {
-        console.log(err);
       }
+      if (shelterSnapshot.empty) {
+        console.log('No such shelter document!');
+      } else {
+        shelterSnapshot.forEach(doc => {
+          this.shelterData.push(doc.data());
+        });
+      }
+    })();
   },
   computed: {
     stateCheck() {
@@ -108,16 +106,31 @@ export default {
   },
   methods: {
     async removePet() {
-      await this.$store.dispatch("removePet", {
-        petID: this.removeThisPetID
+      const snapshot = await this.$store.dispatch("getPetByPetID", {
+        petID: parseInt(this.removeThisPetID)
       });
+      if (snapshot.empty) {
+        console.log('No matching pets with that ID to be removed.');
+      } else {
+        snapshot.forEach(doc => {
+          doc.ref.delete();
+        });
+      }
+      return;
     },
 
     async changeDescription() {
-      await this.$store.dispatch("updateShelterDescription", {
+      const snapshot = await this.$store.dispatch("getShelter", {
         shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
-        description: this.newDescription
       });
+      if (snapshot.empty) {
+        console.log('No matching shelter with that ID to find.');
+      } else {
+        snapshot.forEach(doc => {
+          doc.ref.update({description: this.newDescription});
+        });
+      }
+      return;
     },
   }
 };
