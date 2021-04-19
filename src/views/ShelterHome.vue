@@ -9,58 +9,46 @@
       <el-button type="success">Current Page</el-button>
       <el-button type="primary">Page 6</el-button>
     </div>
+
     <!-- SHELTER INFO -->
     <el-row class="shelterTools">
-      <el-col :span="6">
+      <div>
         <p>Shelter Image</p>
-      </el-col>
-      <el-col :span="6">
+      </div>
+      <div>
         <p>Shelter Description</p>
-      </el-col>
+      </div>
+      <div>
+        <p>Shelter Like/Dislike</p>
+      </div>
     </el-row>
 
-    <!-- SHELTER TOOLS -->
-    <el-row class="shelterTools">
-      <el-col :span="8">
-        <el-input
-          placeholder="Edit Shelter Description"
-          v-model="input"
-        ></el-input>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="info">Change/Loading</el-button>
-      </el-col>
-    </el-row>
-    <el-row type="flex" justify="center">
-      <el-col :span="4">
-        <el-button type="info">Add Pet</el-button>
-      </el-col>
-    </el-row>
+    <!-- CHANGE DESCRIPTION -->
+    <p>
+      <input v-model="newDescription" placeholder="Change Shelter Description: ">
+    </p>
+    <el-button type="primary" v-on:click="changeDescription()">Change Description</el-button>
+
+    <!-- REMOVE PET -->
+    <p>
+      <input v-model="removeThisPetID" placeholder="Enter Pet ID: ">
+    </p>
+    <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
+
+    <!-- ADD PET -->
+    <el-button type="primary">Add Pet</el-button>   <!-- redirect to add pet form page -->
 
     <!-- LIST OF PETS -->
     <div class="petList">
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
+      <ul id="array-rendering">
+        <li v-for="pet in petData" v-bind:key="pet">
+          {{ pet.name }}
+          {{ pet.description}}
+        </li>
+      </ul>
     </div>
+
+
   </div>
 </template>
 
@@ -68,11 +56,46 @@
 export default {
   name: "Home",
   components: {},
+  data() {
+    return {
+      petData: [],
+      shelterDescription: "",
+      removeThisPetID: "",
+    }
+  },
+  created() {
+    try {
+        const doc = await this.$store.dispatch("getPets", {
+          shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        });
+        if (!doc.exists) {
+          console.log('No such document!');
+        } else {
+          this.petData = doc.data();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+  },
   computed: {
     stateCheck() {
       return this.$store.state;
     },
   },
+  methods: {
+    async removePet() {
+      await this.$store.dispatch("removePet", {
+        petID: this.removeThisPetID
+      });
+    },
+    
+    async changeDescription() {
+      await this.$store.dispatch("updateShelterDescription", {
+        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        description: newDescription
+      });
+    },
+  }
 };
 </script>
 
