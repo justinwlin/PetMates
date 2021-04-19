@@ -75,16 +75,16 @@ export default {
         likes: "",
         dislike: ""
       },
-      shelterDescription: "",
+      newDescription: "",
       removeThisPetID: "",
     }
   },
   created() {
     try {
-        const petDoc = await this.$store.dispatch("getPets", {
+        const petDoc = this.$store.dispatch("getPets", {
           shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
         });
-        const shelterDoc = await this.$store.dispatch("getShelter", {
+        const shelterDoc = this.$store.dispatch("getShelter", {
           shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
         });
         if (!petDoc.exists) {
@@ -116,7 +116,7 @@ export default {
     async changeDescription() {
       await this.$store.dispatch("updateShelterDescription", {
         shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
-        description: newDescription
+        description: this.newDescription
       });
     },
   }
