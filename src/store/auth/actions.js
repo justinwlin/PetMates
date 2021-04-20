@@ -62,6 +62,7 @@ export default {
 			email: payload.username,
 			uid: userCred.user.uid,
 			customer: true,
+			favorites: [],
 		});
 	},
 	async registerShelter({ commit }, payload) {
