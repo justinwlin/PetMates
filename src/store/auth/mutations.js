@@ -13,6 +13,10 @@ export default {
 		state.email = payload.email;
 		state.uid = payload.uid;
 		state.iscustomer = payload.customer;
+		state.ownedShelterID = payload.shelterID;
 		console.log(state);
+	},
+	setShelterID(state, payload) {
+		state.ownedShelterID = payload.shelterID;
 	},
 };

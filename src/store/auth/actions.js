@@ -15,6 +15,11 @@ export default {
 		}
 		console.log(usercred.user.uid);
 		const doc = await (await usersdb.doc(usercred.user.uid).get()).data();
+		let shelterID = "";
+		if (doc.shelterID) {
+			shelterID = doc.shelterID;
+			commit("setShelterID", { shelterID: shelterID });
+		}
 		commit("customerLogin", {
 			name: doc.name,
 			email: payload.username,
@@ -114,6 +119,7 @@ export default {
 			email: payload.email,
 			uid: userCred.user.uid,
 			customer: false,
+			shelterID: shelterID,
 		});
 	},
 };
