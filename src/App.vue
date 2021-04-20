@@ -2,6 +2,8 @@
   <div id="app">
     <!-- Components you want to show right now -->
     <div v-if="!loginState">
+      <CustomerLoginRegister></CustomerLoginRegister>
+
       <ShelterRegistration></ShelterRegistration>
     </div>
     <!-- Components to Hide -->

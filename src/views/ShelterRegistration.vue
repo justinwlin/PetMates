@@ -85,16 +85,16 @@
 export default {
   data: () => {
     return {
-      name: "asd@gmail.com",
-      email: "asd@gmail.com",
-      registerPassword: "asd@gmail.com",
-      registerPasswordConfirm: "asd@gmail.com",
-      street: "asd@gmail.com",
-      city: "asd@gmail.com",
-      state: "asd@gmail.com",
-      zipcode: "asd@gmail.com",
-      nameOfShelter: "asd@gmail.com",
-      description: "asd@gmail.com",
+      name: "",
+      email: "",
+      registerPassword: "",
+      registerPasswordConfirm: "",
+      street: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      nameOfShelter: "",
+      description: "",
       selectedFile: null,
     };
   },

@@ -68,7 +68,7 @@ export default {
 		try {
 			userCred = await auth.createUserWithEmailAndPassword(
 				payload.email,
-				payload.password + shelterID
+				payload.password
 			);
 		} catch {
 			(err) => {
