@@ -1,35 +1,42 @@
 <template>
-	<div id="app">
+  <div id="app">
     <!-- Components you want to show right now -->
-		<div v-if="!loginState">
-      <ShelterSelection></ShelterSelection>
-		</div>
+    <div v-if="!loginState">
+      <CustomerLoginRegister></CustomerLoginRegister>
+    </div>
     <!-- Components to Hide -->
-		<div v-else>
-      <LoginRegister></LoginRegister>
-			<PetForm></PetForm>
-			<ShelterHome></ShelterHome>
-			<ShelterSelection></ShelterSelection>
+    <div v-else>
+      <ShelterSelection></ShelterSelection>
+      <CustomerLoginRegister></CustomerLoginRegister>
+      <PetForm></PetForm>
+      <ShelterHome></ShelterHome>
+      <ShelterSelection></ShelterSelection>
       <PetSwipe></PetSwipe>
-		</div>
-	</div>
+    </div>
+  </div>
 </template>
 
 <script>
-import LoginRegister from "./views/LoginRegister";
+import CustomerLoginRegister from "./views/CustomerLoginRegister";
 import PetForm from "./views/PetForm";
 import ShelterHome from "./views/ShelterHome";
-import PetSwipe from './views/PetSwipeDemo';
-import ShelterSelection from './views/ShelterSelection';
+import PetSwipe from "./views/PetSwipeDemo";
+import ShelterSelection from "./views/ShelterSelection";
 
 export default {
-	name: "App",
-	components: { LoginRegister, PetForm, ShelterHome, PetSwipe, ShelterSelection },
-	computed: {
-		loginState() {
-			return this.$store.getters.loggedInState;
-		},
-	},
+  name: "App",
+  components: {
+    CustomerLoginRegister,
+    PetForm,
+    ShelterHome,
+    PetSwipe,
+    ShelterSelection,
+  },
+  computed: {
+    loginState() {
+      return this.$store.getters.loggedInState;
+    },
+  },
 };
 </script>
 

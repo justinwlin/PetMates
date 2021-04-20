@@ -19,66 +19,65 @@
       </template>
     </Tinder>
     <div class="btns">
-      <img src="../assets/nope.png" @click="decide('nope')">
-      <img src="../assets/like.png" @click="decide('like')">
-      <img src="../assets/rewind.png" @click="decide('rewind')">
-
+      <img src="../assets/nope.png" @click="decide('nope')" />
+      <img src="../assets/like.png" @click="decide('like')" />
+      <img src="../assets/rewind.png" @click="decide('rewind')" />
     </div>
   </div>
 </template>
 
 <script>
-import Tinder from '../components/vue-tinder/Tinder.vue'
-import source from './bing'
+import Tinder from "../components/vue-tinder/Tinder.vue";
+import source from "./bing";
 
 export default {
-  name: 'App',
+  name: "App",
   components: { Tinder },
   data: () => ({
     queue: [],
     offset: 0,
-    history: []
+    history: [],
   }),
   created() {
-    this.mock()
+    this.mock();
   },
   methods: {
     mock(count = 5, append = true) {
-      const list = []
+      const list = [];
       for (let i = 0; i < count; i++) {
-        list.push({ id: source[this.offset] })
-        this.offset++
+        list.push({ id: source[this.offset] });
+        this.offset++;
       }
       if (append) {
-        this.queue = this.queue.concat(list)
+        this.queue = this.queue.concat(list);
       } else {
-        this.queue.unshift(...list)
+        this.queue.unshift(...list);
       }
     },
     onSubmit({ item }) {
       if (this.queue.length < 3) {
-        this.mock()
+        this.mock();
       }
-      this.history.push(item)
+      this.history.push(item);
     },
     async decide(choice) {
-      if (choice === 'rewind') {
+      if (choice === "rewind") {
         if (this.history.length) {
           this.$refs.tinder.rewind(
             this.history.splice(-Math.ceil(Math.random() * 3))
-          )
+          );
         }
-      } else if (choice === 'help') {
+      } else if (choice === "help") {
         //
       } else {
-        this.$refs.tinder.decide(choice)
+        this.$refs.tinder.decide(choice);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
 html,
 body {
   height: 100%;
@@ -188,25 +187,4 @@ body {
 .btns img:nth-last-child(1) {
   margin-right: 0;
 }
-
-/* .vue-tinder.right-end,
-.vue-tinder.left-end {
-  transform: translateZ(20px);
-}
-.vue-tinder.right-end .tinder-card:nth-child(1) {
-  animation: rightEnd 0.2s ease-in-out;
-}
-.vue-tinder.left-end .tinder-card:nth-child(1) {
-  animation: leftEnd 0.2s ease-in-out;
-}
-@keyframes leftEnd {
-  50% {
-    transform: rotateY(8deg);
-  }
-}
-@keyframes rightEnd {
-  50% {
-    transform: rotateY(-8deg);
-  }
-} */
 </style>
