@@ -1,65 +1,53 @@
 <template>
   <div class="home">
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
     <!-- SHELTER INFO -->
-    <el-row class="shelterTools">
-      <el-col :span="6">
+    <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">
+      >
+      <div>
+        <p>Shelter Name</p>
+        {{ shelter.name }}
+      </div>
+      <div>
         <p>Shelter Image</p>
-      </el-col>
-      <el-col :span="6">
+      </div>
+      <div>
         <p>Shelter Description</p>
-      </el-col>
+        {{ shelter.description }}
+      </div>
+      <div>
+        <p>Shelter Like</p>
+        {{ shelter.likes }}
+      </div>
+      <div>
+        <p>Shelter Dislike</p>
+        {{ shelter.dislike }}
+      </div>
     </el-row>
 
-    <!-- SHELTER TOOLS -->
-    <el-row class="shelterTools">
-      <el-col :span="8">
-        <el-input
-          placeholder="Edit Shelter Description"
-          v-model="input"
-        ></el-input>
-      </el-col>
-      <el-col :span="4">
-        <el-button type="info">Change/Loading</el-button>
-      </el-col>
-    </el-row>
-    <el-row type="flex" justify="center">
-      <el-col :span="4">
-        <el-button type="info">Add Pet</el-button>
-      </el-col>
-    </el-row>
+    <!-- CHANGE DESCRIPTION -->
+    <p>
+      <input v-model="newDescription" placeholder="Change Shelter Description: " />
+    </p>
+    <el-button type="primary" v-on:click="changeDescription()">Change Description</el-button>
+
+    <!-- REMOVE PET -->
+    <p>
+      <input v-model="removeThisPetID" placeholder="Enter Pet ID: " />
+    </p>
+    <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
+
+    <!-- ADD PET -->
+    <el-button type="primary">Add Pet</el-button>
+    <!-- redirect to add pet form page -->
 
     <!-- LIST OF PETS -->
     <div class="petList">
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
-      <el-row class="shelterTools">
-        <el-col :span="4"> <p>Pet Profile Photo</p> </el-col>
-        <el-col :span="4"> <p>Pet Name</p> </el-col>
-        <el-col :span="4">
-          <el-button type="info">Remove Pet</el-button>
-        </el-col>
-      </el-row>
+      <ul id="array-rendering">
+        <li v-for="pet in petData" v-bind:key="pet">
+          {{ pet.name }}
+          {{ pet.description}}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -68,9 +56,71 @@
 export default {
   name: "Home",
   components: {},
+  data() {
+    return {
+      petData: [],
+      shelterData: [],
+      newDescription: "",
+      removeThisPetID: "",
+    };
+  },
+  created() {
+    (async () => {
+      const petSnapshot = await this.$store.dispatch("getPetsInShelter", {
+        shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+      });
+      const shelterSnapshot = await this.$store.dispatch("getShelter", {
+        shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+      });
+
+      if (petSnapshot.empty) {
+        console.log("No such pet document!");
+      } else {
+        petSnapshot.forEach((doc) => {
+          this.petData.push(doc.data());
+        });
+      }
+      if (shelterSnapshot.empty) {
+        console.log("No such shelter document!");
+      } else {
+        shelterSnapshot.forEach((doc) => {
+          this.shelterData.push(doc.data());
+        });
+      }
+    })();
+  },
   computed: {
     stateCheck() {
       return this.$store.state;
+    },
+  },
+  methods: {
+    async removePet() {
+      const snapshot = await this.$store.dispatch("getPetByPetID", {
+        petID: parseInt(this.removeThisPetID),
+      });
+      if (snapshot.empty) {
+        console.log("No matching pets with that ID to be removed.");
+      } else {
+        snapshot.forEach((doc) => {
+          doc.ref.delete();
+        });
+      }
+      return;
+    },
+
+    async changeDescription() {
+      const snapshot = await this.$store.dispatch("getShelter", {
+        shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+      });
+      if (snapshot.empty) {
+        console.log("No matching shelter with that ID to find.");
+      } else {
+        snapshot.forEach((doc) => {
+          doc.ref.update({ description: this.newDescription });
+        });
+      }
+      return;
     },
   },
 };

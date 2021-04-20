@@ -2,12 +2,12 @@
   <div id="app">
     <!-- Components you want to show right now -->
     <div v-if="!loginState">
-      <CustomerLoginRegister></CustomerLoginRegister>
-
-      <ShelterRegistration></ShelterRegistration>
+      <PetForm></PetForm>
+      <PetSelected></PetSelected>
     </div>
     <!-- Components to Hide -->
     <div v-else>
+      <ShelterRegistration></ShelterRegistration>
       <ShelterSelection></ShelterSelection>
       <CustomerLoginRegister></CustomerLoginRegister>
       <PetForm></PetForm>
@@ -25,11 +25,13 @@ import ShelterHome from "./views/ShelterHome";
 import PetSwipe from "./views/PetSwipeDemo";
 import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
+import PetSelected from "./views/PetSelected";
 
 export default {
   name: "App",
   components: {
     CustomerLoginRegister,
+    PetSelected,
     PetForm,
     ShelterHome,
     PetSwipe,

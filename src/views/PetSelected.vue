@@ -1,0 +1,91 @@
+<template>
+  <div>
+    <div>
+      <!-- Pet Image -->
+      <div>
+        <p>Pet Image</p>
+        {{ petImage }}
+      </div>
+      <!-- Pet Description -->
+      <div>
+        <p>Pet Description</p>
+        {{ petDescription }}
+      </div>
+      <!-- Shelter Location -->
+      <div>
+        <p>Shelter Location</p>
+        {{ shelterState }}
+        {{ shelterStreet }}
+        {{ shelterCity }}
+        {{ shelterZipcode }}
+      </div>
+      <!-- Social Media, contact, and schedule not here -->
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Home",
+  components: {},
+  data() {
+    return {
+      petImage: "",
+      petDescription: "",
+      shelterState: "",
+      shelterStreet: "",
+      shelterCity: "",
+      shelterZipcode: "",
+      petShelterID: "",
+    };
+  },
+  created() {
+    (async () => {
+      const snapshot = await this.$store.dispatch("getPetByPetID", {
+        petID: 625, //hardcoded for now, change later so this changes when u enter the website
+      });
+      if (snapshot.empty) {
+        console.log("No matching pets with that ID found.");
+      } else {
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          this.petImage = data.image;
+          this.petDescription = data.description;
+          this.petShelterID = data.shelterID;
+        });
+      }
+
+      const shelterSnapshot = await this.$store.dispatch("getShelter", {
+        shelterID: this.petShelterID, //need persistence of pet shelter first. Code as 1 for now
+      });
+      if (shelterSnapshot.empty) {
+        console.log("No such shelter document!");
+      } else {
+        shelterSnapshot.forEach((doc) => {
+          const data = doc.data();
+          this.shelterState = data.state;
+          this.shelterStreet = data.street;
+          this.shelterCity = data.city;
+          this.shelterZipcode = data.zipcode;
+        });
+      }
+    })();
+  },
+};
+</script>
+
+<style scoped>
+.center {
+  display: flex;
+  justify-content: center;
+  margin: 1rem;
+}
+.shelterTools {
+  display: flex;
+  justify-content: center;
+  margin: 2rem;
+}
+.petList {
+  outline: 2px solid black;
+}
+</style>

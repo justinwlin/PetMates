@@ -21,20 +21,22 @@
         <img :src="imagebase64" height="150" />
       </div>
       <!-- Pet Age -->
-      <div>
-        <input v-model="petAge" number placeholder="Pet age: " />
-      </div>
+      <p>
+        <input v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
+      </p>
+      <p>
+        <input v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
+      </p>
+      <p>
+        <input v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
+      </p>
       <!-- Pet Breed -->
       <div>
         <input v-model="petBreed" placeholder="Pet Breed: " />
       </div>
       <!-- Pet Gender -->
       <div>
-        <select v-model="petGender">
-          <option disabled value="">Please select one</option>
-          <option>male</option>
-          <option>female</option>
-        </select>
+        <input v-model="petGender" placeholder="Pet Gender: " />
       </div>
       <!-- Pet Description -->
       <p>
@@ -42,11 +44,8 @@
       </p>
       <!-- Pet Neutered -->
       <p>
-        <select v-model="petNeutered">
-          <option disabled value="">Please select one</option>
-          <option>neutered</option>
-          <option>not neutered</option>
-        </select>
+        <input type="radio" v-model="petNeutered" v-bind:value="true" />
+        <input type="radio" v-model="petNeutered" v-bind:value="false" />
       </p>
       <!-- Pet Special Needs -->
       <div>
@@ -70,10 +69,12 @@ export default {
   data() {
     return {
       petGender: "",
-      petAge: "",
+      petAgeDay: "",
+      petAgeMonth: "",
+      petAgeYear: "",
       petBreed: "",
       petDescription: "",
-      petNeutered: "neutered",
+      petNeutered: true,
       petNeeds: "",
       petNotes: "",
       selectedFile: null,
@@ -89,25 +90,29 @@ export default {
       });
       fileReader.readAsDataURL(this.selectedFile);
     },
-    onUpload() {
+    async onUpload() {
       if (!this.selectedFile) {
         alert("please submit an image");
         return;
       }
-      this.$store.dispatch("addPets", {
-        day: 1, //Int
-        description: this.petDescription, //string
-        gender: this.petGender, //string
-        image: this.selectedFile, //array of url images?
-        month: 1, //int
-        neutered: this.petNeutered, //boolean
-        notes: this.petNotes, //string
-        petID: Math.floor(Math.random() * 1000), //int
-        shelterID: 1, //it
-        specialNeeds: "", //string
-        year: 2000, //int
-        name: "randomName",
-      });
+      try {
+        await this.$store.dispatch("addPets", {
+          day: parseInt(this.petAgeDay),
+          description: this.petDescription,
+          gender: this.petGender,
+          image: this.selectedFile,
+          month: parseInt(this.petAgeMonth),
+          neutered: this.petNeutered,
+          notes: this.petNotes,
+          petID: Math.ceil(Math.random() * 10000), //generate random int that's long
+          shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+          specialNeeds: this.petNeeds,
+          year: parseInt(this.petAgeYear),
+          name: "randomName",
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

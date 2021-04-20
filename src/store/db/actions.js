@@ -66,4 +66,15 @@ export default {
 			image: "", // a string url
 		});
 	},
+	async getPetByPetID(ctx, { petID }) {
+		return await petsdb.where("petID", "==", petID).get();
+	},
+
+	async getPetsInShelter(ctx, { shelterID }) {
+		return await petsdb.where("shelterID", "==", shelterID).get();
+	},
+
+	async getShelter(ctx, { shelterID }) {
+		return await storesdb.where("shelterID", "==", shelterID).get();
+	},
 };
