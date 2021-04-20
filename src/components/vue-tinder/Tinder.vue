@@ -5,13 +5,13 @@
     :css="false"
     @beforeEnter="beforeEnter"
     @leave="leave"
-    @touchstart.native="start"
-    @touchmove.native="move"
-    @touchend.native="end"
-    @touchcancel.native="end"
-    @mousedown.native="start"
-    @mousemove.native="move"
-    @mouseup.native="end"
+    @touchstart="start"
+    @touchmove="move"
+    @touchend="end"
+    @touchcancel="end"
+    @mousedown="start"
+    @mousemove="move"
+    @mouseup="end"
   >
     <template v-for="(item, index) in list">
       <TinderCard
@@ -34,14 +34,12 @@
         <slot :data="item" :index="index" :status="status"></slot>
         <template v-if="index === 0 && status !== 2">
           <span
-            slot="nope"
             class="pointer-wrap nope-pointer-wrap"
             :style="{ opacity: nopeOpacity }"
           >
             <slot name="nope" :opacity="nopeOpacity" />
           </span>
           <span
-            slot="like"
             class="pointer-wrap like-pointer-wrap"
             :style="{ opacity: likeOpacity }"
           >
@@ -49,7 +47,6 @@
           </span>
           <span
             v-if="allowSuper"
-            slot="super"
             class="pointer-wrap super-pointer-wrap"
             :style="{ opacity: superOpacity }"
           >
@@ -57,7 +54,6 @@
           </span>
           <span
             v-if="allowDown"
-            slot="down"
             class="pointer-wrap down-pointer-wrap"
             :style="{ opacity: downOpacity }"
           >
@@ -67,7 +63,6 @@
         <!-- rewind 指示器显示不需要是第一张卡片，会由内部判断显示 -->
         <span
           v-if="state.status === 4"
-          slot="rewind"
           class="pointer-wrap rewind-pointer-wrap"
         >
           <slot name="rewind" />
