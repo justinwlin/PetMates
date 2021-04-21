@@ -1,8 +1,8 @@
-import { petsdb  } from "../../firebase/config";
-
+import { petsdb } from "../../firebase/config";
+import store from "./../index";
 export default {
-    async fetchPets({ commit }, payload) {
-        console.log(commit);
-        console.log(petsdb)
-    }
+	async fetchPets({ commit }, payload) {
+		console.log(commit, payload, petsdb);
+		console.log(store.getters.getSelectedShelter);
+	},
 };

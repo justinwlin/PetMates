@@ -104,7 +104,6 @@ export default {
           month: parseInt(this.petAgeMonth),
           neutered: this.petNeutered,
           notes: this.petNotes,
-          petID: Math.ceil(Math.random() * 10000), //generate random int that's long
           shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
           specialNeeds: this.petNeeds,
           year: parseInt(this.petAgeYear),
