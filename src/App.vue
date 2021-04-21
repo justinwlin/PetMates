@@ -3,9 +3,11 @@
     <!-- Components you want to show right now -->
 
     <div v-if="!loginState">
+      <CustomerLoginRegister></CustomerLoginRegister>
     </div>
     <!-- Components to Hide -->
     <div v-else>
+      <PetSwipe></PetSwipe>
       <PetForm></PetForm>
       <PetSelected></PetSelected>
       <ShelterRegistration></ShelterRegistration>
@@ -15,7 +17,6 @@
       <PetForm></PetForm>
       <ShelterHome></ShelterHome>
       <ShelterSelection></ShelterSelection>
-      <PetSwipe></PetSwipe>
     </div>
   </div>
 </template>
@@ -41,9 +42,6 @@ export default {
     ShelterRegistration,
   },
   methods: {
-    async getPets() {
-      this.$store.dispatch("getPets");
-    },
     async onUpload() {
       console.log("hi");
     },
