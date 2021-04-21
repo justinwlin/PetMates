@@ -2,13 +2,14 @@
   <div id="app">
     <!-- Components you want to show right now -->
     <div v-if="!loginState">
-      <PetForm></PetForm>
-      <PetSelected></PetSelected>
+      
+      <ShelterSelection></ShelterSelection>
     </div>
     <!-- Components to Hide -->
     <div v-else>
       <ShelterRegistration></ShelterRegistration>
-      <ShelterSelection></ShelterSelection>
+      <PetForm></PetForm>
+      <PetSelected></PetSelected>
       <CustomerLoginRegister></CustomerLoginRegister>
       <PetForm></PetForm>
       <ShelterHome></ShelterHome>
