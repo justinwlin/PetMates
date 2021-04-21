@@ -11,21 +11,34 @@
     </div>
 
     <div class="shelterTitle">
-        <p>Available Shelters</p>
+      <p>Available Shelters</p>
     </div>
 
-    <!-- LIST OF PETS -->
+    <!-- LIST OF SHELTERS -->
 
     <div class="shelterList">
-      <div class="shelter">Shelter 1</div>
-      <div class="shelter">Shelter 2</div>
-      <div class="shelter">Shelter 3</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
+      <el-row
+        class="shelter"
+        v-for="shelter in shelterList"
+        v-bind:key="shelter"
+      >
+        <div>
+          <p>Shelter Name</p>
+          {{ shelter.name }}
+        </div>
+        <div>
+          <p>Shelter Image</p>
+        </div>
+        <div>
+          <p>Shelter Like</p>
+          {{ shelter.like }}
+        </div>
+        <div>
+          <p>Shelter Dislike</p>
+          {{ shelter.dislike }}
+        </div>
+        <el-button type="primary" v-on:click="seeShelterDetails()">See More</el-button>
+      </el-row>
       
     </div>
   </div>
@@ -35,10 +48,63 @@
 export default {
   name: "Home",
   components: {},
+  data() {
+    return {
+      shelterList: [
+        {
+          name: "Shelter 1",
+          like: 23,
+          dislike: 5
+        },
+        {
+          name: "Shelter 2",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 3",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 4",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 5",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 6",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 7",
+          like: 100,
+          dislike: 15
+        },
+        {
+          name: "Shelter 8",
+          like: 100,
+          dislike: 15
+        },
+      ],
+    };
+  },
+
   computed: {
     stateCheck() {
       return this.$store.state;
     },
+  },
+
+  methods: {
+    async seeShelterDetails() { // need to do routing here according to the selected ShelterID
+
+    }
   },
 };
 </script>
@@ -61,14 +127,12 @@ export default {
   justify-content: center;
   align-content: center;
   flex-wrap: wrap;
-  color: aliceblue;
-  
+  color: solid black;
 }
 
 .shelterTitle {
   display: flex;
   justify-content: center;
-  color: aliceblue;
+  color: solid black;
 }
-
 </style>

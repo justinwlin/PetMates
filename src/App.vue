@@ -3,14 +3,14 @@
     <!-- Components you want to show right now -->
 
     <div v-if="!loginState">
-      <button @click="getPets">CLICK</button>
     </div>
     <!-- Components to Hide -->
     <div v-else>
       <PetForm></PetForm>
       <PetSelected></PetSelected>
       <ShelterRegistration></ShelterRegistration>
-      <ShelterSelection></ShelterSelection>
+      <PetForm></PetForm>
+      <PetSelected></PetSelected>
       <CustomerLoginRegister></CustomerLoginRegister>
       <PetForm></PetForm>
       <ShelterHome></ShelterHome>
