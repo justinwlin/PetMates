@@ -3,6 +3,7 @@
     <!-- Components you want to show right now -->
 
     <div v-if="!loginState">
+      <FavoritePets></FavoritePets>
     </div>
     <!-- Components to Hide -->
     <div v-else>
@@ -28,6 +29,7 @@ import PetSwipe from "./views/PetSwipe";
 import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
 import PetSelected from "./views/PetSelected";
+import FavoritePets from "./views/FavoritePets";
 
 export default {
   name: "App",
@@ -39,6 +41,7 @@ export default {
     PetSwipe,
     ShelterSelection,
     ShelterRegistration,
+    FavoritePets,
   },
   methods: {
     async getPets() {
