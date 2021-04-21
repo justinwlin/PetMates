@@ -1,8 +1,16 @@
-import { petsdb } from "../../firebase/config";
 import store from "./../index";
 export default {
-	async fetchPets({ commit }, payload) {
-		console.log(commit, payload, petsdb);
-		console.log(store.getters.getSelectedShelter);
+	async getPets() {
+		console.log("getting pets");
+		let results = await store.dispatch("getPetsInShelter", {
+			shelterID: store.getters.getSelectedShelter,
+		});
+		let array = [];
+		results.forEach((doc) => {
+			console.log(doc.id, " => ", doc.data().image);
+			array.push(doc.data().image);
+		});
+		console.log(array);
+		return array;
 	},
 };

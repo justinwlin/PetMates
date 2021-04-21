@@ -42,15 +42,7 @@ export default {
   },
   methods: {
     async getPets() {
-      console.log("getting pets");
-      let results = await this.$store.dispatch("getPetsInShelter", {
-        shelterID: this.$store.getters.getSelectedShelter,
-      });
-      console.log(results);
-      results.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data().image);
-      });
-      return "hi";
+      this.$store.dispatch("getPets");
     },
     async onUpload() {
       console.log("hi");
