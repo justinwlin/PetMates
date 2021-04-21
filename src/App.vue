@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <!-- Components you want to show right now -->
+
     <div v-if="!loginState">
-      
-      <ShelterSelection></ShelterSelection>
     </div>
     <!-- Components to Hide -->
     <div v-else>
+      <PetForm></PetForm>
+      <PetSelected></PetSelected>
       <ShelterRegistration></ShelterRegistration>
       <PetForm></PetForm>
       <PetSelected></PetSelected>
@@ -23,7 +24,7 @@
 import CustomerLoginRegister from "./views/CustomerLoginRegister";
 import PetForm from "./views/PetForm";
 import ShelterHome from "./views/ShelterHome";
-import PetSwipe from "./views/PetSwipeDemo";
+import PetSwipe from "./views/PetSwipe";
 import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
 import PetSelected from "./views/PetSelected";
@@ -38,6 +39,14 @@ export default {
     PetSwipe,
     ShelterSelection,
     ShelterRegistration,
+  },
+  methods: {
+    async getPets() {
+      this.$store.dispatch("getPets");
+    },
+    async onUpload() {
+      console.log("hi");
+    },
   },
   computed: {
     loginState() {

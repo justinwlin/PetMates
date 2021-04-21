@@ -10,7 +10,6 @@ export default {
 			month,
 			neutered,
 			notes,
-			petID,
 			shelterID,
 			specialNeeds,
 			year,
@@ -25,11 +24,11 @@ export default {
 			month: month, //int
 			neutered: neutered, //boolean
 			notes: notes, //string
-			petID: petID, //int
 			shelterID: shelterID, //it
 			specialNeeds: specialNeeds, //string
 			year: year, //int
 			name: name,
+			petID: Math.floor(Math.random() * 1000000000),
 		});
 		let filePath = "pets/" + res.id;
 		let imgRef = imgstore.ref().child(filePath);
