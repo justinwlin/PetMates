@@ -4,6 +4,7 @@
     <div v-if="!loginState">
       <PetForm></PetForm>
       <PetSelected></PetSelected>
+      <ShelterSelected></ShelterSelected>
     </div>
     <!-- Components to Hide -->
     <div v-else>
@@ -26,6 +27,7 @@ import PetSwipe from "./views/PetSwipeDemo";
 import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
 import PetSelected from "./views/PetSelected";
+import ShelterSelected from "./views/ShelterSelected";
 
 export default {
   name: "App",
@@ -37,6 +39,7 @@ export default {
     PetSwipe,
     ShelterSelection,
     ShelterRegistration,
+    ShelterSelected,
   },
   computed: {
     loginState() {
