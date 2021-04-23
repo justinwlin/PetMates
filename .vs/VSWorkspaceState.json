@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\firebase",
+    "\\src\\store",
+    "\\src\\store\\db",
+    "\\src\\store\\tinder",
+    "\\src\\views"
+  ],
+  "SelectedNode": "\\src\\store\\db\\actions.js",
+  "PreviewInSolutionExplorer": false
+}
