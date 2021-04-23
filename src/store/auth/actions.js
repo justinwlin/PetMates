@@ -26,9 +26,15 @@ export default {
 			uid: usercred.user.uid,
 			customer: doc.customer,
 		});
-		commit("navigatePage", {
-			page: "shelterselection",
-		});
+		if (store.getters.isCustomer) {
+			commit("navigatePage", {
+				page: "shelterselection",
+			});
+		} else {
+			commit("navigatePage", {
+				page: "shelterhome",
+			});
+		}
 	},
 
 	async registerUser({ commit }, payload) {

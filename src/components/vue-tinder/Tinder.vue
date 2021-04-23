@@ -81,7 +81,6 @@ export default {
     TinderCard,
   },
   props: {
-    // TODO: 考虑添加一个不强制渲染的配置
     allowSuper: {
       type: Boolean,
       default: true,

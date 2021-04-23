@@ -96,7 +96,7 @@ body {
   z-index: 1;
   left: 0;
   right: 0;
-  top: 23px;
+  top: 5rem;
   margin: auto;
   width: calc(100% - 20px);
   height: calc(100% - 23px - 65px - 47px - 16px);
@@ -168,6 +168,7 @@ body {
   justify-content: center;
   min-width: 300px;
   max-width: 355px;
+  z-index: 2;
 }
 
 .btns img {

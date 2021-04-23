@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <div v-if="!isLoggedin"></div>
+    <div v-else-if="isCustomerAccount">
+      <Customernavbar></Customernavbar>
+    </div>
+    <div v-else>
+      <Businessnavbar></Businessnavbar>
+    </div>
     <!-- Components you want to show right now -->
     <div v-if="pageState === 'regularlogin'">
       <CustomerLoginRegister></CustomerLoginRegister>
@@ -40,6 +47,8 @@ import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
 import PetSelected from "./views/PetSelected";
 import FavoritePets from "./views/FavoritePets";
+import Customernavbar from "./components/customernavbar";
+import Businessnavbar from "./components/businessnavbar";
 
 export default {
   name: "App",
@@ -52,14 +61,27 @@ export default {
     ShelterSelection,
     ShelterRegistration,
     FavoritePets,
+    Customernavbar,
+    Businessnavbar,
   },
   method: {},
   computed: {
     pageState() {
       return this.$store.getters.getCurrentPage;
     },
+    isCustomerAccount() {
+      return this.$store.getters.getisCustomer;
+    },
+    isLoggedin() {
+      return this.$store.getters.loggedInState;
+    },
   },
 };
 </script>
 
-<style scoped></style>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+}
+</style>

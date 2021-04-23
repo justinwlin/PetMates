@@ -12,11 +12,11 @@ export default createStore({
 		profileName: "",
 		email: "",
 		uid: "",
-		iscustomer: true,
+		iscustomer: false,
 		selectedShelter: 1, //shelterID
 		ownedShelterID: "",
 		selectedPetID: 1,
-		page: "login",
+		page: "",
 	},
 	mutations: {
 		...authmutations,
