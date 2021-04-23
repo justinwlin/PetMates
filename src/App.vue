@@ -1,25 +1,32 @@
 <template>
   <div id="app">
     <!-- Components you want to show right now -->
-
-
-    <div v-if="!loginState">
-      <FavoritePets></FavoritePets>
-
+    <div v-if="pageState === 'regularlogin'">
+      <CustomerLoginRegister></CustomerLoginRegister>
     </div>
-
-    <!-- Components to Hide -->
+    <div v-else-if="pageState == 'petform'">
+      <PetForm></PetForm>
+    </div>
+    <div v-else-if="pageState == 'petselected'">
+      <PetSelected></PetSelected>
+    </div>
+    <div v-else-if="pageState == 'shelterregistration'">
+      <ShelterRegistration></ShelterRegistration>
+    </div>
+    <div v-else-if="pageState == 'shelterhome'">
+      <ShelterHome></ShelterHome>
+    </div>
+    <div v-else-if="pageState == 'shelterselection'">
+      <ShelterSelection></ShelterSelection>
+    </div>
+    <div v-else-if="pageState == 'favoritePets'">
+      <FavoritePets></FavoritePets>
+    </div>
+    <div v-else-if="pageState == 'petswipe'">
+      <PetSwipe></PetSwipe>
+    </div>
     <div v-else>
       <CustomerLoginRegister></CustomerLoginRegister>
-      <PetForm></PetForm>
-      <PetSelected></PetSelected>
-      <ShelterRegistration></ShelterRegistration>
-      <PetForm></PetForm>
-      <PetSelected></PetSelected>
-      <CustomerLoginRegister></CustomerLoginRegister>
-      <PetForm></PetForm>
-      <ShelterHome></ShelterHome>
-      <ShelterSelection></ShelterSelection>
     </div>
   </div>
 </template>
@@ -46,14 +53,10 @@ export default {
     ShelterRegistration,
     FavoritePets,
   },
-  methods: {
-    async onUpload() {
-      console.log("hi");
-    },
-  },
+  method: {},
   computed: {
-    loginState() {
-      return this.$store.getters.loggedInState;
+    pageState() {
+      return this.$store.getters.getCurrentPage;
     },
   },
 };

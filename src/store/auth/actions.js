@@ -26,6 +26,9 @@ export default {
 			uid: usercred.user.uid,
 			customer: doc.customer,
 		});
+		commit("navigatePage", {
+			page: "shelterselection",
+		});
 	},
 
 	async registerUser({ commit }, payload) {
@@ -63,6 +66,9 @@ export default {
 			uid: userCred.user.uid,
 			customer: true,
 			favorites: [],
+		});
+		commit("navigatePage", {
+			page: "shelterselection",
 		});
 	},
 	async registerShelter({ commit }, payload) {
@@ -121,6 +127,9 @@ export default {
 			uid: userCred.user.uid,
 			customer: false,
 			shelterID: shelterID,
+		});
+		commit("navigatePage", {
+			page: "shelterhome",
 		});
 	},
 };

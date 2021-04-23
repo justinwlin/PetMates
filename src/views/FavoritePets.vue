@@ -1,15 +1,5 @@
 <template>
   <div class="home">
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <div class="PetsTitle">
       <p>Favorite Furry Friends</p>
     </div>
@@ -25,9 +15,7 @@
         <div>
           <p>Pet Image</p>
         </div>
-        <el-button type="primary" v-on:click="removeFavorite()"
-          >Delete</el-button
-        >
+        <el-button type="primary" v-on:click="removeFavorite()">Delete</el-button>
       </el-row>
     </div>
   </div>

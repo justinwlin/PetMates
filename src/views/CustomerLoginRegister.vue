@@ -14,17 +14,11 @@
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :span="50">
-            <el-input
-              type="password"
-              placeholder="Password"
-              v-model="loginPassword"
-            ></el-input>
+            <el-input type="password" placeholder="Password" v-model="loginPassword"></el-input>
           </el-col>
         </el-row>
         <div class="center">
-          <el-button type="primary" v-on:click="login()"
-            >Login{{ createUserText }}</el-button
-          >
+          <el-button type="primary" v-on:click="login()">Login{{ createUserText }}</el-button>
         </div>
       </div>
       <div class="LRsubcontainer">
@@ -35,10 +29,7 @@
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :span="50">
-            <el-input
-              placeholder="Preferred Name"
-              v-model="registerName"
-            ></el-input>
+            <el-input placeholder="Preferred Name" v-model="registerName"></el-input>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -48,11 +39,7 @@
         </el-row>
         <el-row type="flex" justify="center">
           <el-col :span="50">
-            <el-input
-              type="password"
-              placeholder="Password"
-              v-model="registerPassword"
-            ></el-input>
+            <el-input type="password" placeholder="Password" v-model="registerPassword"></el-input>
           </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -65,9 +52,7 @@
           </el-col>
         </el-row>
         <div class="center">
-          <el-button type="primary" v-on:click="register()"
-            >Register{{ createUserText }}</el-button
-          >
+          <el-button type="primary" v-on:click="register()">Register{{ createUserText }}</el-button>
         </div>
       </div>
     </div>
@@ -108,7 +93,7 @@ export default {
         password: this.registerPassword,
         username: this.registerUsername,
         name: this.registerName,
-        favoritedPets: []
+        favoritedPets: [],
       });
     },
   },

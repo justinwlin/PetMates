@@ -1,15 +1,5 @@
 <template>
   <div class="home">
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <div class="shelterTitle">
       <p>Available Shelters</p>
     </div>
@@ -17,11 +7,7 @@
     <!-- LIST OF SHELTERS -->
 
     <div class="shelterList">
-      <el-row
-        class="shelter"
-        v-for="shelter in shelterList"
-        v-bind:key="shelter"
-      >
+      <el-row class="shelter" v-for="shelter in shelterList" v-bind:key="shelter">
         <div>
           <p>Shelter Name</p>
           {{ shelter.name }}
@@ -39,7 +25,6 @@
         </div>
         <el-button type="primary" v-on:click="seeShelterDetails()">See More</el-button>
       </el-row>
-      
     </div>
   </div>
 </template>
@@ -54,42 +39,42 @@ export default {
         {
           name: "Shelter 1",
           like: 23,
-          dislike: 5
+          dislike: 5,
         },
         {
           name: "Shelter 2",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 3",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 4",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 5",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 6",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 7",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
         {
           name: "Shelter 8",
           like: 100,
-          dislike: 15
+          dislike: 15,
         },
       ],
     };
@@ -102,9 +87,9 @@ export default {
   },
 
   methods: {
-    async seeShelterDetails() { // need to do routing here according to the selected ShelterID
-
-    }
+    async seeShelterDetails() {
+      // need to do routing here according to the selected ShelterID
+    },
   },
 };
 </script>

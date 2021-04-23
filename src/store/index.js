@@ -16,7 +16,7 @@ export default createStore({
 		selectedShelter: 1, //shelterID
 		ownedShelterID: "",
 		selectedPetID: 1,
-		pageState: "login",
+		page: "login",
 	},
 	mutations: {
 		...authmutations,
