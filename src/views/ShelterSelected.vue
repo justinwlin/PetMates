@@ -5,11 +5,11 @@
             <el-button type="primary">Favorites</el-button>
         </div>
         <div class="picture">
-            <img src={{shelterImage}}/>
+            <img v-bind:src="shelterImage" />
         </div>
         <div class = "profile">
-            <h2>{{shelterName}}
-            <button>Email Shelter </button></h2> 
+            <h1>{{shelterName}}
+            <el-button>Email Shelter </el-button></h1> 
             <div class = "like">
                 <p>LIKES : {{likes}}         DISLIKES: {{dislikes}}</p>
             </div>
@@ -78,11 +78,12 @@ export default {
     }
     .profile{
         width: 100%;
-        text-align:center;
+        text-align:left; 
+        margin-left: 450px;
         position:absolute;
         display: inline-block;
     }
     .pet{
-        text-align:center;
+        text-align:left;
     }
 </style>
