@@ -52,7 +52,7 @@ export default {
   created() {
     (async () => {   
       const snapshot = await this.$store.dispatch("getPetByPetID", {
-        petID: 625                        //hardcoded for now, change later so this changes when u enter the website                   
+        petID: this.$store.getters.getSelectedPet            
       });
       if (snapshot.empty) {
         console.log('No matching pets with that ID found.');
@@ -66,7 +66,7 @@ export default {
       }
 
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
-        shelterID: this.petShelterID                //need persistence of pet shelter first. Code as 1 for now
+        shelterID: this.$store.getters.getSelectedShelter
       });
       if (shelterSnapshot.empty) {
         console.log('No such shelter document!');

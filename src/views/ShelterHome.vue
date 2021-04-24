@@ -77,10 +77,10 @@ export default {
   created() {
     (async () => {
       const petSnapshot = await this.$store.dispatch("getPetsInShelter", {
-        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        shelterID: this.$store.getters.getSelectedShelter,                  
       });
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
-        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        shelterID: this.$store.getters.getSelectedShelter,
       });
 
       if (petSnapshot.empty) {
