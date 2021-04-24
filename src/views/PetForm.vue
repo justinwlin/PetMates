@@ -2,7 +2,9 @@
   <div class="home">
     <!-- NAVIGATION BAR-->
     <!-- Pet Form -->
-    <form id="petForm">
+    <form id="petForm" class="center">
+      <p class="center">Add Pet Form</p>
+
       <!-- Pet Image Upload -->
       <p>Pet Image Upload</p>
       <div>

@@ -9,6 +9,7 @@
       </div>
       <div>
         <p>Shelter Image</p>
+        <img v-bind:src="shelter.image">
       </div>
       <div>
         <p>Shelter Description</p>
