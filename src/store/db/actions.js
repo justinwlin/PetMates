@@ -1,4 +1,4 @@
-import { petsdb, storesdb, imgstore } from "../../firebase/config";
+import { petsdb, storesdb, usersdb,imgstore } from "../../firebase/config";
 export default {
 	async addPets(
 		ctx,
@@ -80,4 +80,8 @@ export default {
 	async getShelters() {
 		return await storesdb.get();
 	},
+
+	async getFavPetsByUID(ctx, {uid}) {
+		return await usersdb.doc(uid).get();
+	}
 };

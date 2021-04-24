@@ -45,10 +45,8 @@ export default {
         console.log("No such shelter!");
       } else {
         snapshot.forEach((doc) => {
-          console.log("Doc data: ", doc.data());
           this.shelterData.push(doc.data());
         });
-        console.log(this.shelterData);
       }
     })();
   },
