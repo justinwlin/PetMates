@@ -1,23 +1,27 @@
 <template>
   <div class="home">
-    <div class="navBar">
-      <el-button type="primary">Select Shelter</el-button>
-      <el-button type="primary">Favorites</el-button>
-    </div>
     <div class="picture">
       <img v-bind:src="shelterImage" />
     </div>
     <div class="profile">
-      <h1>{{ shelterName }} <el-button>Email Shelter </el-button></h1>
+      <h1>
+        {{ shelterName }}
+        <el-button>Email Shelter</el-button>
+      </h1>
       <div class="like">
         <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
       </div>
       <p>
-        {{ shelterDescription }} <br />
-        {{ shelterState }}<br />
-        {{ shelterStreet }}<br />
-        {{ shelterCity }}<br />
-        {{ shelterZipcode }}<br />
+        {{ shelterDescription }}
+        <br />
+        {{ shelterState }}
+        <br />
+        {{ shelterStreet }}
+        <br />
+        {{ shelterCity }}
+        <br />
+        {{ shelterZipcode }}
+        <br />
       </p>
       <div class="pet">
         <el-button type="primary">CHECK OUT THE PETS</el-button>
