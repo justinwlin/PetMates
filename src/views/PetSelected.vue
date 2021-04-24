@@ -13,10 +13,10 @@
       </div>
       <!-- Shelter Location -->
       <div>
-        <p>Shelter Location</p>
-        {{ shelterState }}
-        {{ shelterStreet }}
-        {{ shelterCity }}
+        <p> Shelter Location </p>
+        {{ shelterState }} 
+        {{ shelterStreet }} 
+        {{ shelterCity }} 
         {{ shelterZipcode }}
       </div>
       <!-- Social Media, contact, and schedule not here -->
@@ -40,14 +40,14 @@ export default {
     };
   },
   created() {
-    (async () => {
+    (async () => {   
       const snapshot = await this.$store.dispatch("getPetByPetID", {
-        petID: 625, //hardcoded for now, change later so this changes when u enter the website
+        petID: this.$store.getters.getSelectedPet            
       });
       if (snapshot.empty) {
-        console.log("No matching pets with that ID found.");
+        console.log('No matching pets with that ID found.');
       } else {
-        snapshot.forEach((doc) => {
+        snapshot.forEach(doc => {
           const data = doc.data();
           this.petImage = data.image;
           this.petDescription = data.description;
@@ -56,12 +56,12 @@ export default {
       }
 
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
-        shelterID: this.petShelterID, //need persistence of pet shelter first. Code as 1 for now
+        shelterID: this.$store.getters.getSelectedShelter
       });
       if (shelterSnapshot.empty) {
-        console.log("No such shelter document!");
+        console.log('No such shelter document!');
       } else {
-        shelterSnapshot.forEach((doc) => {
+        shelterSnapshot.forEach(doc => {
           const data = doc.data();
           this.shelterState = data.state;
           this.shelterStreet = data.street;
@@ -70,7 +70,7 @@ export default {
         });
       }
     })();
-  },
+  }
 };
 </script>
 
