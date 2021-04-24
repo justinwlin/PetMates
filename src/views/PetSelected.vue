@@ -1,15 +1,5 @@
 <template>
   <div>
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <div>
       <!-- Pet Image -->
       <div>

@@ -1,24 +1,14 @@
 <template>
   <div class="home">
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <!-- SHELTER INFO -->
-    <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">>
+    <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">
+      >
       <div>
         <p>Shelter Name</p>
         {{ shelter.name }}
       </div>
       <div>
         <p>Shelter Image</p>
-    
       </div>
       <div>
         <p>Shelter Description</p>
@@ -28,7 +18,7 @@
         <p>Shelter Like</p>
         {{ shelter.likes }}
       </div>
-       <div>
+      <div>
         <p>Shelter Dislike</p>
         {{ shelter.dislike }}
       </div>
@@ -36,18 +26,19 @@
 
     <!-- CHANGE DESCRIPTION -->
     <p>
-      <input v-model="newDescription" placeholder="Change Shelter Description: ">
+      <input v-model="newDescription" placeholder="Change Shelter Description: " />
     </p>
     <el-button type="primary" v-on:click="changeDescription()">Change Description</el-button>
 
     <!-- REMOVE PET -->
     <p>
-      <input v-model="removeThisPetID" placeholder="Enter Pet ID: ">
+      <input v-model="removeThisPetID" placeholder="Enter Pet ID: " />
     </p>
     <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
 
     <!-- ADD PET -->
-    <el-button type="primary">Add Pet</el-button>   <!-- redirect to add pet form page -->
+    <el-button type="primary">Add Pet</el-button>
+    <!-- redirect to add pet form page -->
 
     <!-- LIST OF PETS -->
     <div class="petList">
@@ -72,7 +63,7 @@ export default {
       shelterData: [],
       newDescription: "",
       removeThisPetID: "",
-    }
+    };
   },
   created() {
     (async () => {

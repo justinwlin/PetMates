@@ -1,32 +1,30 @@
 <template>
   <div class="home">
-    <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <div class="shelterTitle">
-        <p>Available Shelters</p>
+      <p>Available Shelters</p>
     </div>
 
-    <!-- LIST OF PETS -->
+    <!-- LIST OF SHELTERS -->
 
     <div class="shelterList">
-      <div class="shelter">Shelter 1</div>
-      <div class="shelter">Shelter 2</div>
-      <div class="shelter">Shelter 3</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      <div class="shelter">Shelter 4</div>
-      
+      <el-row class="shelter" v-for="shelter in shelterData" v-bind:key="shelter">
+        <div>
+          <p>Shelter Name</p>
+          {{ shelter.name }}
+        </div>
+        <div>
+          <p>Shelter Image</p>
+        </div>
+        <div>
+          <p>Shelter Like</p>
+          {{ shelter.likes }}
+        </div>
+        <div>
+          <p>Shelter Dislike</p>
+          {{ shelter.dislike }}
+        </div>
+        <el-button type="primary" v-on:click="seeShelterDetails()">See More</el-button>
+      </el-row>
     </div>
   </div>
 </template>
@@ -35,9 +33,34 @@
 export default {
   name: "Home",
   components: {},
+  data() {
+    return {
+      shelterData: [],
+    };
+  },
+  created() {
+    (async () => {
+      const snapshot = await this.$store.dispatch("getShelters");
+      if (snapshot.empty) {
+        console.log("No such shelter!");
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("Doc data: ", doc.data());
+          this.shelterData.push(doc.data());
+        });
+        console.log(this.shelterData);
+      }
+    })();
+  },
   computed: {
     stateCheck() {
       return this.$store.state;
+    },
+  },
+
+  methods: {
+    async seeShelterDetails() {
+      // need to do routing here according to the selected ShelterID
     },
   },
 };
@@ -61,14 +84,12 @@ export default {
   justify-content: center;
   align-content: center;
   flex-wrap: wrap;
-  color: aliceblue;
-  
+  color: solid black;
 }
 
 .shelterTitle {
   display: flex;
   justify-content: center;
-  color: aliceblue;
+  color: solid black;
 }
-
 </style>

@@ -1,38 +1,87 @@
 <template>
-	<div id="app">
+  <div id="app">
+    <div v-if="!isLoggedin"></div>
+    <div v-else-if="isCustomerAccount">
+      <Customernavbar></Customernavbar>
+    </div>
+    <div v-else>
+      <Businessnavbar></Businessnavbar>
+    </div>
     <!-- Components you want to show right now -->
-		<div v-if="!loginState">
+    <div v-if="pageState === 'regularlogin'">
+      <CustomerLoginRegister></CustomerLoginRegister>
+    </div>
+    <div v-else-if="pageState == 'petform'">
+      <PetForm></PetForm>
+    </div>
+    <div v-else-if="pageState == 'petselected'">
       <PetSelected></PetSelected>
-		</div>
-    <!-- Components to Hide -->
-		<div v-else>
-      <LoginRegister></LoginRegister>
-			<PetForm></PetForm>
-			<PetSelected></PetSelected>
-			<ShelterHome></ShelterHome>
-			<ShelterSelection></ShelterSelection>
+    </div>
+    <div v-else-if="pageState == 'shelterregistration'">
+      <ShelterRegistration></ShelterRegistration>
+    </div>
+    <div v-else-if="pageState == 'shelterhome'">
+      <ShelterHome></ShelterHome>
+    </div>
+    <div v-else-if="pageState == 'shelterselection'">
+      <ShelterSelection></ShelterSelection>
+    </div>
+    <div v-else-if="pageState == 'favoritePets'">
+      <FavoritePets></FavoritePets>
+    </div>
+    <div v-else-if="pageState == 'petswipe'">
       <PetSwipe></PetSwipe>
-		</div>
-	</div>
+    </div>
+    <div v-else>
+      <CustomerLoginRegister></CustomerLoginRegister>
+    </div>
+  </div>
 </template>
 
 <script>
-import LoginRegister from "./views/LoginRegister";
+import CustomerLoginRegister from "./views/CustomerLoginRegister";
 import PetForm from "./views/PetForm";
 import ShelterHome from "./views/ShelterHome";
-import PetSwipe from './views/PetSwipeDemo';
-import ShelterSelection from './views/ShelterSelection';
-import PetSelected from './views/PetSelected';
+import PetSwipe from "./views/PetSwipe";
+import ShelterSelection from "./views/ShelterSelection";
+import ShelterRegistration from "./views/ShelterRegistration";
+import PetSelected from "./views/PetSelected";
+import FavoritePets from "./views/FavoritePets";
+import Customernavbar from "./components/customernavbar";
+import Businessnavbar from "./components/businessnavbar";
 
 export default {
-	name: "App",
-	components: { LoginRegister, PetForm, ShelterHome, PetSwipe, ShelterSelection, PetSelected },
-	computed: {
-		loginState() {
-			return this.$store.getters.loggedInState;
-		},
-	},
+  name: "App",
+  components: {
+    CustomerLoginRegister,
+    PetSelected,
+    PetForm,
+    ShelterHome,
+    PetSwipe,
+    ShelterSelection,
+    ShelterRegistration,
+    FavoritePets,
+    Customernavbar,
+    Businessnavbar,
+  },
+  method: {},
+  computed: {
+    pageState() {
+      return this.$store.getters.getCurrentPage;
+    },
+    isCustomerAccount() {
+      return this.$store.getters.getisCustomer;
+    },
+    isLoggedin() {
+      return this.$store.getters.loggedInState;
+    },
+  },
 };
 </script>
 
-<style scoped></style>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+}
+</style>
