@@ -49,7 +49,7 @@ export default {
   },
   async created() {
     const shelterSnapshot = await this.$store.dispatch("getShelter", {
-      shelterID: 1,
+      shelterID: this.$store.getters.getSelectedShelter,
     });
     if (shelterSnapshot.empty) {
       console.log("No such shelter document!");
