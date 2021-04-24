@@ -35,6 +35,10 @@
     <div v-else-if="pageState == 'shelterSelected'">
       <ShelterSelected></ShelterSelected>
     </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7b630eee1fb9dbf5cb686486afb7cb4c97b82120
     <div v-else>
       <CustomerLoginRegister></CustomerLoginRegister>
     </div>
