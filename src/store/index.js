@@ -14,7 +14,7 @@ export default createStore({
 		uid: "",
 		iscustomer: false,
 		selectedShelter: 1, //shelterID
-		ownedShelterID: "",
+		ownedShelterID: 1,
 		selectedPetID: 1,
 		page: "",
 	},

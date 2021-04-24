@@ -4,8 +4,8 @@
     <!-- Pet Form -->
     <form id="petForm">
       <!-- Pet Image Upload -->
+      <p>Pet Image Upload</p>
       <div>
-        Pet Image Upload
         <input type="file" @change="onFileChanged" />
       </div>
       <div>
@@ -13,41 +13,41 @@
       </div>
       <!-- Pet Age -->
       <p>
-        <input v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
+        <el-input v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
       </p>
       <p>
-        <input v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
+        <el-input v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
       </p>
       <p>
-        <input v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
+        <el-input v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
       </p>
       <!-- Pet Breed -->
       <div>
-        <input v-model="petBreed" placeholder="Pet Breed: " />
+        <el-input v-model="petBreed" placeholder="Pet Breed: " />
       </div>
       <!-- Pet Gender -->
       <div>
-        <input v-model="petGender" placeholder="Pet Gender: " />
+        <el-input v-model="petGender" placeholder="Pet Gender: " />
       </div>
       <!-- Pet Description -->
       <p>
-        <input v-model="petDescription" placeholder="Pet Description: " />
+        <el-input v-model="petDescription" placeholder="Pet Description: " />
       </p>
       <!-- Pet Neutered -->
       <p>
-        <input type="radio" v-model="petNeutered" v-bind:value="true" />
-        <input type="radio" v-model="petNeutered" v-bind:value="false" />
+        <el-radio v-model="petNeutered" :label="true">Neutered</el-radio>
+        <el-radio v-model="petNeutered" :label="false">Not Neutered</el-radio>
       </p>
       <!-- Pet Special Needs -->
       <div>
-        <input v-model="petNeeds" placeholder="Pet Special Needs: " />
+        <el-input v-model="petNeeds" placeholder="Pet Special Needs: " />
       </div>
       <!-- Pet Notes -->
       <div>
-        <input v-model="petNotes" placeholder="Pet Notes: " />
+        <el-input v-model="petNotes" placeholder="Pet Notes: " />
       </div>
       <div>
-        <button @click="onUpload">Submit</button>
+        <el-button @click="onUpload">Submit</el-button>
       </div>
     </form>
   </div>
@@ -87,7 +87,7 @@ export default {
         return;
       }
       try {
-        await this.$store.dispatch("addPets", {
+        console.log({
           day: parseInt(this.petAgeDay),
           description: this.petDescription,
           gender: this.petGender,
@@ -100,6 +100,20 @@ export default {
           year: parseInt(this.petAgeYear),
           name: "randomName",
         });
+        return;
+        // await this.$store.dispatch("addPets", {
+        //   day: parseInt(this.petAgeDay),
+        //   description: this.petDescription,
+        //   gender: this.petGender,
+        //   image: this.selectedFile,
+        //   month: parseInt(this.petAgeMonth),
+        //   neutered: this.petNeutered,
+        //   notes: this.petNotes,
+        //   shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+        //   specialNeeds: this.petNeeds,
+        //   year: parseInt(this.petAgeYear),
+        //   name: "randomName",
+        // });
       } catch (err) {
         console.log(err);
       }
@@ -121,5 +135,11 @@ export default {
 }
 .petList {
   outline: 2px solid black;
+}
+
+#petForm {
+  width: 50%;
+  text-align: center;
+  margin: auto;
 }
 </style>
