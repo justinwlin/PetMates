@@ -11,24 +11,29 @@
       <div>
         <img :src="imagebase64" height="150" />
       </div>
+      <!-- NAME -->
+      <div>
+        <el-input v-model="petname" placeholder="Name of Pet" />
+      </div>
       <!-- Pet Age -->
       <p>
-        <el-input v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
+        <el-input type="number" v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
       </p>
       <p>
-        <el-input v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
+        <el-input type="number" v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
       </p>
       <p>
-        <el-input v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
+        <el-input type="number" v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
       </p>
       <!-- Pet Breed -->
       <div>
         <el-input v-model="petBreed" placeholder="Pet Breed: " />
       </div>
       <!-- Pet Gender -->
-      <div>
-        <el-input v-model="petGender" placeholder="Pet Gender: " />
-      </div>
+      <p>
+        <el-radio v-model="petGender" :label="true">Male</el-radio>
+        <el-radio v-model="petGender" :label="false">Female</el-radio>
+      </p>
       <!-- Pet Description -->
       <p>
         <el-input v-model="petDescription" placeholder="Pet Description: " />
@@ -59,7 +64,7 @@ export default {
   components: {},
   data() {
     return {
-      petGender: "",
+      petGender: true,
       petAgeDay: "",
       petAgeMonth: "",
       petAgeYear: "",
@@ -70,6 +75,7 @@ export default {
       petNotes: "",
       selectedFile: null,
       imagebase64: "",
+      petname: "",
     };
   },
   methods: {
@@ -90,33 +96,57 @@ export default {
         console.log({
           day: parseInt(this.petAgeDay),
           description: this.petDescription,
-          gender: this.petGender,
+          gender: this.petGender ? "male" : "female",
           image: this.selectedFile,
           month: parseInt(this.petAgeMonth),
           neutered: this.petNeutered,
           notes: this.petNotes,
-          shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+          shelterID: this.$store.getters.getSelectedShelter, //need persistence of pet shelter first. Code as 1 for now
           specialNeeds: this.petNeeds,
           year: parseInt(this.petAgeYear),
-          name: "randomName",
+          name: this.petname,
         });
-        return;
-        // await this.$store.dispatch("addPets", {
-        //   day: parseInt(this.petAgeDay),
-        //   description: this.petDescription,
-        //   gender: this.petGender,
-        //   image: this.selectedFile,
-        //   month: parseInt(this.petAgeMonth),
-        //   neutered: this.petNeutered,
-        //   notes: this.petNotes,
-        //   shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
-        //   specialNeeds: this.petNeeds,
-        //   year: parseInt(this.petAgeYear),
-        //   name: "randomName",
-        // });
+        await this.$store.dispatch("addPets", {
+          day: parseInt(this.petAgeDay),
+          description: this.petDescription,
+          gender: this.petGender ? "male" : "female",
+          image: this.selectedFile,
+          month: parseInt(this.petAgeMonth),
+          neutered: this.petNeutered,
+          notes: this.petNotes,
+          shelterID: this.$store.getters.getSelectedShelter, //need persistence of pet shelter first. Code as 1 for now
+          specialNeeds: this.petNeeds,
+          year: parseInt(this.petAgeYear),
+          name: this.petname,
+        });
+        Object.assign(this.$data, this.clearForm());
       } catch (err) {
         console.log(err);
       }
+    },
+    clearForm() {
+      return {
+        petGender: true,
+        petAgeDay: "",
+        petAgeMonth: "",
+        petAgeYear: "",
+        petBreed: "",
+        petDescription: "",
+        petNeutered: true,
+        petNeeds: "",
+        petNotes: "",
+        selectedFile: null,
+        imagebase64: "",
+        petname: "",
+      };
+    },
+  },
+  computed: {
+    isMale() {
+      if (this.petGender === "male") {
+        return true;
+      }
+      return false;
     },
   },
 };

@@ -76,4 +76,5 @@ export default {
 	async getShelter(ctx, { shelterID }) {
 		return await storesdb.where("shelterID", "==", shelterID).get();
 	},
+
 };

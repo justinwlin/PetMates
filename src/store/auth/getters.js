@@ -8,4 +8,7 @@ export default {
 	getisCustomer(state) {
 		return state.iscustomer;
 	},
+	getSelectedShelter(state) {
+		return state.selectedShelter;
+	},
 };
