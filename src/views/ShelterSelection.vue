@@ -7,7 +7,7 @@
     <!-- LIST OF SHELTERS -->
 
     <div class="shelterList">
-      <el-row class="shelter" v-for="shelter in shelterList" v-bind:key="shelter">
+      <el-row class="shelter" v-for="shelter in shelterData" v-bind:key="shelter">
         <div>
           <p>Shelter Name</p>
           {{ shelter.name }}
@@ -17,7 +17,7 @@
         </div>
         <div>
           <p>Shelter Like</p>
-          {{ shelter.like }}
+          {{ shelter.likes }}
         </div>
         <div>
           <p>Shelter Dislike</p>
@@ -35,51 +35,23 @@ export default {
   components: {},
   data() {
     return {
-      shelterList: [
-        {
-          name: "Shelter 1",
-          like: 23,
-          dislike: 5,
-        },
-        {
-          name: "Shelter 2",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 3",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 4",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 5",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 6",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 7",
-          like: 100,
-          dislike: 15,
-        },
-        {
-          name: "Shelter 8",
-          like: 100,
-          dislike: 15,
-        },
-      ],
+      shelterData: [],
     };
   },
-
+  created() {
+    (async () => {
+      const snapshot = await this.$store.dispatch("getShelters");
+      if (snapshot.empty) {
+        console.log("No such shelter!");
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("Doc data: ", doc.data());
+          this.shelterData.push(doc.data());
+        });
+        console.log(this.shelterData);
+      }
+    })();
+  },
   computed: {
     stateCheck() {
       return this.$store.state;
