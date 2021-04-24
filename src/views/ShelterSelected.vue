@@ -62,7 +62,7 @@ export default {
         this.shelterCity = data.city;
         this.shelterZipcode = data.zipcode;
         this.likes = data.likes;
-        this.dislikes = data.dislikes;
+        this.dislikes = data.dislike;
         this.shelterImage = data.image;
       });
     }
