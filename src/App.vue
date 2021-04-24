@@ -32,6 +32,9 @@
     <div v-else-if="pageState == 'petswipe'">
       <PetSwipe></PetSwipe>
     </div>
+    <div v-else-if="pageState == 'shelterSelected'">
+      <ShelterSelected></ShelterSelected>
+    </div>
     <div v-else>
       <CustomerLoginRegister></CustomerLoginRegister>
     </div>
@@ -49,6 +52,7 @@ import PetSelected from "./views/PetSelected";
 import FavoritePets from "./views/FavoritePets";
 import Customernavbar from "./components/customernavbar";
 import Businessnavbar from "./components/businessnavbar";
+import ShelterSelected from "./views/ShelterSelected";
 
 export default {
   name: "App",
@@ -63,6 +67,7 @@ export default {
     FavoritePets,
     Customernavbar,
     Businessnavbar,
+    ShelterSelected,
   },
   method: {},
   computed: {
