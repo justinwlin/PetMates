@@ -26,7 +26,7 @@ export default {
 			uid: usercred.user.uid,
 			customer: doc.customer,
 		});
-		if (store.getters.isCustomer) {
+		if (!store.getters.isCustomer) {
 			commit("navigatePage", {
 				page: "shelterselection",
 			});
