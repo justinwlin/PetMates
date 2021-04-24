@@ -36,7 +36,8 @@
       <ShelterSelected></ShelterSelected>
     </div>
     <div v-else>
-      <CustomerLoginRegister></CustomerLoginRegister>
+      <LandingPage></LandingPage>
+      <!-- <CustomerLoginRegister></CustomerLoginRegister> -->
     </div>
   </div>
 </template>
@@ -53,6 +54,7 @@ import FavoritePets from "./views/FavoritePets";
 import Customernavbar from "./components/customernavbar";
 import Businessnavbar from "./components/businessnavbar";
 import ShelterSelected from "./views/ShelterSelected";
+import LandingPage from "./views/landingPage";
 
 export default {
   name: "App",
@@ -68,6 +70,7 @@ export default {
     Customernavbar,
     Businessnavbar,
     ShelterSelected,
+    LandingPage,
   },
   method: {},
   computed: {
