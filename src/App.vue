@@ -1,20 +1,39 @@
 <template>
   <div id="app">
-    <!-- Components you want to show right now -->
-    <div v-if="!loginState">
-      <PetForm></PetForm>
-      <PetSelected></PetSelected>
-      <ShelterSelected></ShelterSelected>
+    <div v-if="!isLoggedin"></div>
+    <div v-else-if="isCustomerAccount">
+      <Customernavbar></Customernavbar>
     </div>
-    <!-- Components to Hide -->
     <div v-else>
-      <ShelterRegistration></ShelterRegistration>
-      <ShelterSelection></ShelterSelection>
+      <Businessnavbar></Businessnavbar>
+    </div>
+    <!-- Components you want to show right now -->
+    <div v-if="pageState === 'regularlogin'">
       <CustomerLoginRegister></CustomerLoginRegister>
+    </div>
+    <div v-else-if="pageState == 'petform'">
       <PetForm></PetForm>
+    </div>
+    <div v-else-if="pageState == 'petselected'">
+      <PetSelected></PetSelected>
+    </div>
+    <div v-else-if="pageState == 'shelterregistration'">
+      <ShelterRegistration></ShelterRegistration>
+    </div>
+    <div v-else-if="pageState == 'shelterhome'">
       <ShelterHome></ShelterHome>
+    </div>
+    <div v-else-if="pageState == 'shelterselection'">
       <ShelterSelection></ShelterSelection>
+    </div>
+    <div v-else-if="pageState == 'favoritePets'">
+      <FavoritePets></FavoritePets>
+    </div>
+    <div v-else-if="pageState == 'petswipe'">
       <PetSwipe></PetSwipe>
+    </div>
+    <div v-else>
+      <CustomerLoginRegister></CustomerLoginRegister>
     </div>
   </div>
 </template>
@@ -23,11 +42,13 @@
 import CustomerLoginRegister from "./views/CustomerLoginRegister";
 import PetForm from "./views/PetForm";
 import ShelterHome from "./views/ShelterHome";
-import PetSwipe from "./views/PetSwipeDemo";
+import PetSwipe from "./views/PetSwipe";
 import ShelterSelection from "./views/ShelterSelection";
 import ShelterRegistration from "./views/ShelterRegistration";
 import PetSelected from "./views/PetSelected";
-import ShelterSelected from "./views/ShelterSelected";
+import FavoritePets from "./views/FavoritePets";
+import Customernavbar from "./components/customernavbar";
+import Businessnavbar from "./components/businessnavbar";
 
 export default {
   name: "App",
@@ -39,14 +60,28 @@ export default {
     PetSwipe,
     ShelterSelection,
     ShelterRegistration,
-    ShelterSelected,
+    FavoritePets,
+    Customernavbar,
+    Businessnavbar,
   },
+  method: {},
   computed: {
-    loginState() {
+    pageState() {
+      return this.$store.getters.getCurrentPage;
+    },
+    isCustomerAccount() {
+      return this.$store.getters.getisCustomer;
+    },
+    isLoggedin() {
       return this.$store.getters.loggedInState;
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style>
+body {
+  padding: 0;
+  margin: 0;
+}
+</style>

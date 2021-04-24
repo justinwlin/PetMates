@@ -10,25 +10,20 @@
       @submit="onSubmit"
     >
       <template #default="{ data }">
-        <div
-          class="pic"
-          :style="{
-            'background-image': `url(https://cn.bing.com//th?id=OHR.${data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
-          }"
-        />
+        <div class="pic" :style="{
+            'background-image': `url(${data.id})`
+          }" />
       </template>
     </Tinder>
     <div class="btns">
       <img src="../assets/nope.png" @click="decide('nope')" />
       <img src="../assets/like.png" @click="decide('like')" />
-      <img src="../assets/rewind.png" @click="decide('rewind')" />
     </div>
   </div>
 </template>
 
 <script>
 import Tinder from "../components/vue-tinder/Tinder.vue";
-import source from "./bing";
 
 export default {
   name: "App",
@@ -37,15 +32,23 @@ export default {
     queue: [],
     offset: 0,
     history: [],
+    shelterDogImages: [],
+    res: [],
+    like: [],
+    indexInRes: 0,
   }),
-  created() {
+  async created() {
+    this.res = await this.$store.dispatch("getPets");
+    this.shelterDogImages = this.res.map((ele) => {
+      return ele.image;
+    });
     this.mock();
   },
   methods: {
     mock(count = 5, append = true) {
       const list = [];
       for (let i = 0; i < count; i++) {
-        list.push({ id: source[this.offset] });
+        list.push({ id: this.shelterDogImages[this.offset] });
         this.offset++;
       }
       if (append) {
@@ -54,24 +57,23 @@ export default {
         this.queue.unshift(...list);
       }
     },
-    onSubmit({ item }) {
+    onSubmit({ type, item }) {
       if (this.queue.length < 3) {
         this.mock();
       }
       this.history.push(item);
+      if (type == "like") {
+        this.like.push(this.res[this.indexInRes].petID);
+        console.log(this.res[this.indexInRes].petID);
+        this.$store.dispatch("getFavorites", {
+          value: this.res[this.indexInRes].petID,
+        });
+      }
+      this.indexInRes += 1;
     },
     async decide(choice) {
-      if (choice === "rewind") {
-        if (this.history.length) {
-          this.$refs.tinder.rewind(
-            this.history.splice(-Math.ceil(Math.random() * 3))
-          );
-        }
-      } else if (choice === "help") {
-        //
-      } else {
-        this.$refs.tinder.decide(choice);
-      }
+      this.$refs.tinder.decide(choice);
+      console.log(this.history);
     },
   },
 };
@@ -94,7 +96,7 @@ body {
   z-index: 1;
   left: 0;
   right: 0;
-  top: 23px;
+  top: 5rem;
   margin: auto;
   width: calc(100% - 20px);
   height: calc(100% - 23px - 65px - 47px - 16px);
@@ -166,6 +168,7 @@ body {
   justify-content: center;
   min-width: 300px;
   max-width: 355px;
+  z-index: 2;
 }
 
 .btns img {

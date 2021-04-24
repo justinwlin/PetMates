@@ -1,62 +1,58 @@
 <template>
   <div class="home">
     <!-- NAVIGATION BAR-->
-    <div class="navBar center">
-      <el-button type="primary">Page 1</el-button>
-      <el-button type="primary">Page 2</el-button>
-      <el-button type="primary">Page 3</el-button>
-      <el-button type="primary">Page 4</el-button>
-      <el-button type="success">Current Page</el-button>
-      <el-button type="primary">Page 6</el-button>
-    </div>
-
     <!-- Pet Form -->
     <form id="petForm">
       <!-- Pet Image Upload -->
+      <p>Pet Image Upload</p>
       <div>
-        Pet Image Upload
         <input type="file" @change="onFileChanged" />
       </div>
       <div>
         <img :src="imagebase64" height="150" />
       </div>
+      <!-- NAME -->
+      <div>
+        <el-input v-model="petname" placeholder="Name of Pet" />
+      </div>
       <!-- Pet Age -->
       <p>
-        <input v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
+        <el-input type="number" v-model="petAgeDay" number placeholder="Pet Birthday Day: " />
       </p>
       <p>
-        <input v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
+        <el-input type="number" v-model="petAgeMonth" number placeholder="Pet Birthday Month: " />
       </p>
       <p>
-        <input v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
+        <el-input type="number" v-model="petAgeYear" number placeholder="Pet Birthday Year: " />
       </p>
       <!-- Pet Breed -->
       <div>
-        <input v-model="petBreed" placeholder="Pet Breed: " />
+        <el-input v-model="petBreed" placeholder="Pet Breed: " />
       </div>
       <!-- Pet Gender -->
-      <div>
-        <input v-model="petGender" placeholder="Pet Gender: " />
-      </div>
+      <p>
+        <el-radio v-model="petGender" :label="true">Male</el-radio>
+        <el-radio v-model="petGender" :label="false">Female</el-radio>
+      </p>
       <!-- Pet Description -->
       <p>
-        <input v-model="petDescription" placeholder="Pet Description: " />
+        <el-input v-model="petDescription" placeholder="Pet Description: " />
       </p>
       <!-- Pet Neutered -->
       <p>
-        <input type="radio" v-model="petNeutered" v-bind:value="true" />
-        <input type="radio" v-model="petNeutered" v-bind:value="false" />
+        <el-radio v-model="petNeutered" :label="true">Neutered</el-radio>
+        <el-radio v-model="petNeutered" :label="false">Not Neutered</el-radio>
       </p>
       <!-- Pet Special Needs -->
       <div>
-        <input v-model="petNeeds" placeholder="Pet Special Needs: " />
+        <el-input v-model="petNeeds" placeholder="Pet Special Needs: " />
       </div>
       <!-- Pet Notes -->
       <div>
-        <input v-model="petNotes" placeholder="Pet Notes: " />
+        <el-input v-model="petNotes" placeholder="Pet Notes: " />
       </div>
       <div>
-        <button @click="onUpload">Submit</button>
+        <el-button @click="onUpload">Submit</el-button>
       </div>
     </form>
   </div>
@@ -68,7 +64,7 @@ export default {
   components: {},
   data() {
     return {
-      petGender: "",
+      petGender: true,
       petAgeDay: "",
       petAgeMonth: "",
       petAgeYear: "",
@@ -79,6 +75,7 @@ export default {
       petNotes: "",
       selectedFile: null,
       imagebase64: "",
+      petname: "",
     };
   },
   methods: {
@@ -96,23 +93,60 @@ export default {
         return;
       }
       try {
-        await this.$store.dispatch("addPets", {
+        console.log({
           day: parseInt(this.petAgeDay),
           description: this.petDescription,
-          gender: this.petGender,
+          gender: this.petGender ? "male" : "female",
           image: this.selectedFile,
           month: parseInt(this.petAgeMonth),
           neutered: this.petNeutered,
           notes: this.petNotes,
-          petID: Math.ceil(Math.random() * 10000), //generate random int that's long
-          shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
+          shelterID: this.$store.getters.getSelectedShelter, //need persistence of pet shelter first. Code as 1 for now
           specialNeeds: this.petNeeds,
           year: parseInt(this.petAgeYear),
-          name: "randomName",
+          name: this.petname,
         });
+        await this.$store.dispatch("addPets", {
+          day: parseInt(this.petAgeDay),
+          description: this.petDescription,
+          gender: this.petGender ? "male" : "female",
+          image: this.selectedFile,
+          month: parseInt(this.petAgeMonth),
+          neutered: this.petNeutered,
+          notes: this.petNotes,
+          shelterID: this.$store.getters.getSelectedShelter, //need persistence of pet shelter first. Code as 1 for now
+          specialNeeds: this.petNeeds,
+          year: parseInt(this.petAgeYear),
+          name: this.petname,
+        });
+        Object.assign(this.$data, this.clearForm());
       } catch (err) {
         console.log(err);
       }
+    },
+    clearForm() {
+      return {
+        petGender: true,
+        petAgeDay: "",
+        petAgeMonth: "",
+        petAgeYear: "",
+        petBreed: "",
+        petDescription: "",
+        petNeutered: true,
+        petNeeds: "",
+        petNotes: "",
+        selectedFile: null,
+        imagebase64: "",
+        petname: "",
+      };
+    },
+  },
+  computed: {
+    isMale() {
+      if (this.petGender === "male") {
+        return true;
+      }
+      return false;
     },
   },
 };
@@ -131,5 +165,11 @@ export default {
 }
 .petList {
   outline: 2px solid black;
+}
+
+#petForm {
+  width: 50%;
+  text-align: center;
+  margin: auto;
 }
 </style>

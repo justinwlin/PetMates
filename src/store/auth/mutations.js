@@ -19,4 +19,7 @@ export default {
 	setShelterID(state, payload) {
 		state.ownedShelterID = payload.shelterID;
 	},
+	navigatePage(state, { page }) {
+		state.page = page;
+	},
 };

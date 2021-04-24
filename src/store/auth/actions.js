@@ -26,6 +26,15 @@ export default {
 			uid: usercred.user.uid,
 			customer: doc.customer,
 		});
+		if (!store.getters.isCustomer) {
+			commit("navigatePage", {
+				page: "shelterselection",
+			});
+		} else {
+			commit("navigatePage", {
+				page: "shelterhome",
+			});
+		}
 	},
 
 	async registerUser({ commit }, payload) {
@@ -63,6 +72,9 @@ export default {
 			uid: userCred.user.uid,
 			customer: true,
 			favorites: [],
+		});
+		commit("navigatePage", {
+			page: "shelterselection",
 		});
 	},
 	async registerShelter({ commit }, payload) {
@@ -121,6 +133,9 @@ export default {
 			uid: userCred.user.uid,
 			customer: false,
 			shelterID: shelterID,
+		});
+		commit("navigatePage", {
+			page: "shelterhome",
 		});
 	},
 };

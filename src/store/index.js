@@ -3,6 +3,7 @@ import authmutations from "./auth/mutations";
 import authactions from "./auth/actions";
 import authgetter from "./auth/getters";
 import dbactions from "./db/actions";
+import tinderactions from "./tinder/actions";
 
 export default createStore({
 	state: {
@@ -10,9 +11,11 @@ export default createStore({
 		profileName: "",
 		email: "",
 		uid: "",
-		iscustomer: true,
+		iscustomer: false,
 		selectedShelter: 1, //shelterID
-		ownedShelterID: "",
+		ownedShelterID: 1,
+		selectedPetID: 1,
+		page: "",
 	},
 	mutations: {
 		...authmutations,
@@ -20,6 +23,7 @@ export default createStore({
 	actions: {
 		...authactions,
 		...dbactions,
+		...tinderactions,
 	},
 	getters: {
 		...authgetter,
