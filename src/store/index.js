@@ -4,7 +4,6 @@ import authactions from "./auth/actions";
 import authgetter from "./auth/getters";
 import dbactions from "./db/actions";
 import tinderactions from "./tinder/actions";
-import tindergetters from "./tinder/getters";
 
 export default createStore({
 	state: {
@@ -16,7 +15,7 @@ export default createStore({
 		selectedShelter: 1, //shelterID
 		ownedShelterID: 1,
 		selectedPetID: 1,
-		page: "petform",
+		page: "",
 	},
 	mutations: {
 		...authmutations,
@@ -28,7 +27,6 @@ export default createStore({
 	},
 	getters: {
 		...authgetter,
-		...tindergetters,
 	},
 	modules: {},
 });
