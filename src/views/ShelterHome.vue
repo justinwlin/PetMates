@@ -112,7 +112,7 @@ export default {
 
     async changeDescription() {
       const snapshot = await this.$store.dispatch("getShelter", {
-        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        shelterID: this.$store.getters.getSelectedShelter,
       });
       if (snapshot.empty) {
         console.log('No matching shelter with that ID to find.');
