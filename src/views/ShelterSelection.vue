@@ -7,13 +7,20 @@
     <!-- LIST OF SHELTERS -->
 
     <div class="shelterList">
-      <el-row class="shelter" v-for="shelter in shelterData" v-bind:key="shelter">
+      <el-row
+        class="shelter"
+        v-for="shelter in shelterData"
+        v-bind:key="shelter"
+      >
         <div>
           <p>Shelter Name</p>
           {{ shelter.name }}
         </div>
         <div>
           <p>Shelter Image</p>
+          <div>
+            <img :src="shelter.image" height="150" />
+          </div>
         </div>
         <div>
           <p>Shelter Like</p>
@@ -23,7 +30,11 @@
           <p>Shelter Dislike</p>
           {{ shelter.dislike }}
         </div>
-        <el-button type="primary" v-on:click="seeShelterDetails()">See More</el-button>
+        <el-button
+          type="primary"
+          v-on:click="seeShelterDetails(shelter.shelterID)"
+          >See More</el-button
+        >
       </el-row>
     </div>
   </div>
@@ -45,10 +56,8 @@ export default {
         console.log("No such shelter!");
       } else {
         snapshot.forEach((doc) => {
-          console.log("Doc data: ", doc.data());
           this.shelterData.push(doc.data());
         });
-        console.log(this.shelterData);
       }
     })();
   },
@@ -59,8 +68,9 @@ export default {
   },
 
   methods: {
-    async seeShelterDetails() {
-      // need to do routing here according to the selected ShelterID
+    async seeShelterDetails(shelterID) {
+      this.$store.commit("setSelectedShelter", { shelterID: shelterID });
+      this.$store.commit("navigatePage", { page: "shelterSelected" });
     },
   },
 };

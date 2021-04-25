@@ -7,15 +7,20 @@
     <!-- LIST OF PETS -->
 
     <div class="petList">
-      <el-row class="pet" v-for="pet in petList" v-bind:key="pet">
+      <el-row class="pet" v-for="pet in petData" v-bind:key="pet">
         <div>
           <p>Pet Name</p>
           {{ pet.name }}
         </div>
         <div>
           <p>Pet Image</p>
+          <div>
+            <img :src="pet.image" height="150" />
+          </div>
         </div>
-        <el-button type="primary" v-on:click="removeFavorite()">Delete</el-button>
+        <el-button type="primary" v-on:click="removeFavorite()"
+          >Delete</el-button
+        >
       </el-row>
     </div>
   </div>
@@ -27,15 +32,33 @@ export default {
   components: {},
   data() {
     return {
-      petList: [
-        {
-          name: "Pet 1",
-        },
-        {
-          name: "Pet 2",
-        },
-      ],
+      petData: [],
+      petIDs: [],
     };
+  },
+  async created() {
+      const snapshot = await this.$store.dispatch("getFavPetsByUID", {
+        uid: this.$store.getters.getUID,
+      });
+      if (snapshot.empty) {
+        console.log('No such user was found');
+      } else {
+        this.petIDs = snapshot.data().favorites;
+       
+        for (let i = 0; i < this.petIDs.length; i++) {
+          const petSnapshot = await this.$store.dispatch("getPetByPetID", {
+            petID: this.petIDs[i], 
+          });
+          if (petSnapshot.empty) {
+            console.log("No matching pets with that ID found.");
+          } else {
+            petSnapshot.forEach((doc) => {
+              const data = doc.data();
+              this.petData.push(data);
+            });
+          }
+        }
+      }
   },
   computed: {
     stateCheck() {
