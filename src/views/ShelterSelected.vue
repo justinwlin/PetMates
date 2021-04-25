@@ -1,31 +1,36 @@
 <template>
   <div class="home">
-    <div class="picture">
-      <img v-bind:src="shelterImage" />
-    </div>
-    <div class="profile">
-      <h1>
-        {{ shelterName }}
-        <el-button>Email Shelter</el-button>
-      </h1>
-      <div class="like">
-        <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
+    <div class = "flex-container">
+      <div class = "cover">
+        <img v-bind:src="shelterImage" />
       </div>
-      <p>
-        {{ shelterDescription }}
-        <br />
-        {{ shelterState }}
-        <br />
-        {{ shelterStreet }}
-        <br />
-        {{ shelterCity }}
-        <br />
-        {{ shelterZipcode }}
-        <br />
-      </p>
-      <div class="pet">
-        <el-button type="primary">CHECK OUT THE PETS</el-button>
+      <div class="text">
+        <h1>
+          {{ shelterName }}
+          <el-button>Email Shelter</el-button>
+        </h1>
+        <div class="like">
+          <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
+        </div>
+        <p>
+          {{ shelterDescription }}
+          <br />
+          {{ shelterState }}
+          <br />
+          {{ shelterStreet }}
+          <br />
+          {{ shelterCity }}
+          <br />
+          {{ shelterZipcode }}
+          <br />
+        </p>
+        <div class="pet">
+          <el-button type="primary"
+          v-on:click="checkOutPets()"
+          >CHECK OUT THE PETS</el-button>
+        </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -36,6 +41,7 @@ export default {
   components: {},
   data() {
     return {
+      shelterID:"",
       shelterImage: "",
       shelterName: "",
       shelterDescription: "",
@@ -56,6 +62,7 @@ export default {
     } else {
       shelterSnapshot.forEach((doc) => {
         const data = doc.data();
+        this.shelterID = data.shelterID
         this.shelterName = data.name;
         this.shelterState = data.state;
         this.shelterStreet = data.street;
@@ -67,26 +74,30 @@ export default {
       });
     }
   },
+  methods : {
+    async checkOutPets() {
+      this.$store.commit("navigatePage",{ page: "petswipe" });
+    },
+  },
 };
 </script>
 
 <style scoped>
-.picture {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  position: absoulte;
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
   margin-top: 100px;
-  width: 50%;
+  object-fit: cover;
 }
-.profile {
-  width: 100%;
-  text-align: left;
-  margin-left: 450px;
-  position: absolute;
-  display: inline-block;
-}
+
 .pet {
   text-align: left;
+}
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column;
+  }
 }
 </style>
