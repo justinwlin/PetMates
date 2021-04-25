@@ -88,7 +88,6 @@ export default {
   flex-direction: column;
   align-items: center;
   align-content: center;
-  margin-top: 100px;
   object-fit: cover;
 }
 
