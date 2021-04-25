@@ -14,6 +14,9 @@
         </div>
         <div>
           <p>Pet Image</p>
+          <div>
+            <img :src="pet.image" height="150" />
+          </div>
         </div>
         <el-button type="primary" v-on:click="removeFavorite()"
           >Delete</el-button

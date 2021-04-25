@@ -22,4 +22,8 @@ export default {
 	navigatePage(state, { page }) {
 		state.page = page;
 	},
+
+	setSelectedShelter(state, payload) {
+		state.selectedShelter = payload.shelterID;
+	}
 };
