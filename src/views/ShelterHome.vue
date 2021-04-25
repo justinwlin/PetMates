@@ -42,9 +42,10 @@
     <!-- redirect to add pet form page -->
 
     <!-- LIST OF PETS -->
-    <div class="petList">
+    <div class="serv">
       <ul id="array-rendering">
         <li v-for="pet in petData" v-bind:key="pet">
+          <img v-bind:src="pet.image">
           {{ pet.name }}
           {{ pet.description}}
         </li>
@@ -139,7 +140,14 @@ export default {
   justify-content: center;
   margin: 2rem;
 }
-.petList {
+.serv ul {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+}
+.serv ul li {
+  list-style: none;
+  flex: 0 0 33.333333%;
   outline: 2px solid black;
 }
 </style>
