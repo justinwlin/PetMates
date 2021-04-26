@@ -7,7 +7,7 @@
       <div class="text">
         <h1>
           {{ shelterName }}
-          <el-button>Email Shelter</el-button>
+          <a href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
