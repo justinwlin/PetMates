@@ -7,10 +7,12 @@
       <div class="text">
         <h1>
           {{ shelterName }}
-          <el-button>Email Shelter</el-button>
+          <a href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
+          <el-button type="primary" v-on:click="increaseLike()">Like</el-button>
+          <el-button type="primary" v-on:click="increaseDislike()">Dislike</el-button>
         </div>
         <p>
           {{ shelterDescription }}
@@ -77,6 +79,32 @@ export default {
   methods : {
     async checkOutPets() {
       this.$store.commit("navigatePage",{ page: "petswipe" });
+    },
+    async increaseLike() {
+      const shelterSnapshot = await this.$store.dispatch("getShelter", {
+        shelterID: this.$store.getters.getSelectedShelter,
+      });
+      if (shelterSnapshot.empty) {
+        console.log("No such shelter document!");
+      } else {
+        shelterSnapshot.forEach((doc) => {
+          const data = doc.data();
+          doc.ref.update({likes: data.likes + 1});
+        });
+      }
+    },
+    async increaseDislike() {
+      const shelterSnapshot = await this.$store.dispatch("getShelter", {
+        shelterID: this.$store.getters.getSelectedShelter,
+      });
+      if (shelterSnapshot.empty) {
+        console.log("No such shelter document!");
+      } else {
+        shelterSnapshot.forEach((doc) => {
+          const data = doc.data();
+          doc.ref.update({dislike: data.dislike + 1});
+        });
+      }
     },
   },
 };
