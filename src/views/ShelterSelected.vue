@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <div class = "flex-container">
-      <div class = "cover">
+    <div class="flex-container">
+      <div class="cover">
         <img v-bind:src="shelterImage" />
       </div>
       <div class="text">
         <h1>
           {{ shelterName }}
-          <a href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
+          <a
+            href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet"
+            >Email Shelter</a
+          >
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
           <el-button type="primary" v-on:click="increaseLike()">Like</el-button>
-          <el-button type="primary" v-on:click="increaseDislike()">Dislike</el-button>
+          <el-button type="primary" v-on:click="increaseDislike()"
+            >Dislike</el-button
+          >
         </div>
         <p>
           {{ shelterDescription }}
@@ -27,12 +32,11 @@
           <br />
         </p>
         <div class="pet">
-          <el-button type="primary"
-          v-on:click="checkOutPets()"
-          >CHECK OUT THE PETS</el-button>
+          <el-button type="primary" v-on:click="checkOutPets()"
+            >CHECK OUT THE PETS</el-button
+          >
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -43,7 +47,7 @@ export default {
   components: {},
   data() {
     return {
-      shelterID:"",
+      shelterID: "",
       shelterImage: "",
       shelterName: "",
       shelterDescription: "",
@@ -52,7 +56,9 @@ export default {
       shelterCity: "",
       shelterZipcode: "",
       likes: "",
+      disableLike: false,
       dislikes: "",
+      disableDislike: false,
     };
   },
   async created() {
@@ -64,7 +70,7 @@ export default {
     } else {
       shelterSnapshot.forEach((doc) => {
         const data = doc.data();
-        this.shelterID = data.shelterID
+        this.shelterID = data.shelterID;
         this.shelterName = data.name;
         this.shelterState = data.state;
         this.shelterStreet = data.street;
@@ -76,34 +82,42 @@ export default {
       });
     }
   },
-  methods : {
+  methods: {
     async checkOutPets() {
-      this.$store.commit("navigatePage",{ page: "petswipe" });
+      this.$store.commit("navigatePage", { page: "petswipe" });
     },
     async increaseLike() {
-      const shelterSnapshot = await this.$store.dispatch("getShelter", {
-        shelterID: this.$store.getters.getSelectedShelter,
-      });
-      if (shelterSnapshot.empty) {
-        console.log("No such shelter document!");
-      } else {
-        shelterSnapshot.forEach((doc) => {
-          const data = doc.data();
-          doc.ref.update({likes: data.likes + 1});
+      if (this.disableLike == false) {
+        const shelterSnapshot = await this.$store.dispatch("getShelter", {
+          shelterID: this.$store.getters.getSelectedShelter,
         });
+        if (shelterSnapshot.empty) {
+          console.log("No such shelter document!");
+        } else {
+          shelterSnapshot.forEach((doc) => {
+            const data = doc.data();
+            doc.ref.update({ likes: data.likes + 1 });
+          });
+        }
+        this.likes = this.likes + 1;
+        this.disableLike = true;
       }
     },
     async increaseDislike() {
-      const shelterSnapshot = await this.$store.dispatch("getShelter", {
-        shelterID: this.$store.getters.getSelectedShelter,
-      });
-      if (shelterSnapshot.empty) {
-        console.log("No such shelter document!");
-      } else {
-        shelterSnapshot.forEach((doc) => {
-          const data = doc.data();
-          doc.ref.update({dislike: data.dislike + 1});
+      if (this.disableDislike == false) {
+        const shelterSnapshot = await this.$store.dispatch("getShelter", {
+          shelterID: this.$store.getters.getSelectedShelter,
         });
+        if (shelterSnapshot.empty) {
+          console.log("No such shelter document!");
+        } else {
+          shelterSnapshot.forEach((doc) => {
+            const data = doc.data();
+            doc.ref.update({ dislike: data.dislike + 1 });
+          });
+        }
+        this.dislikes = this.dislikes + 1;
+        this.disableDislike = true;
       }
     },
   },
