@@ -87,6 +87,7 @@ export default {
   justify-content: center;
   margin: 2rem;
   min-width: 25%;
+  max-width: 25%;
 }
 
 .shelterList {

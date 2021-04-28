@@ -83,5 +83,9 @@ export default {
 
 	async getFavPetsByUID(ctx, {uid}) {
 		return await usersdb.doc(uid).get();
+	},
+
+	async getUserDocByUID(ctx, {uid}) { //no get() here, only need the doc
+		return usersdb.doc(uid);
 	}
 };

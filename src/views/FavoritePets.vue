@@ -18,7 +18,7 @@
             <img :src="pet.image" height="150" />
           </div>
         </div>
-        <el-button type="primary" v-on:click="removeFavorite()"
+        <el-button type="primary" v-on:click="removeFavorite(pet.petID)"
           >Delete</el-button
         >
       </el-row>
@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import firebase from "firebase/app";
+
 export default {
   name: "Home",
   components: {},
@@ -67,9 +69,22 @@ export default {
   },
 
   methods: {
-    async removeFavorite() {
-      // need to do routing here according to the selected ShelterID
+    async removeFavorite(petID) {
+      const snapshot = await this.$store.dispatch("getUserDocByUID", {
+        uid: this.$store.getters.getUID,
+      });
+      if (snapshot.empty) {
+        console.log('No such user was found');
+      } else {
+        snapshot.update({
+          "favorites": firebase.firestore.FieldValue.arrayRemove(petID)
+        });
+        console.log(petID);
+      }
     },
   },
 };
 </script>
+
+<style scoped>
+</style>
