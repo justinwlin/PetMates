@@ -7,7 +7,7 @@
       <div class="text">
         <h1>
           {{ shelterName }}
-          <a href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
+          <a class="btn" href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
@@ -51,6 +51,7 @@ export default {
       shelterStreet: "",
       shelterCity: "",
       shelterZipcode: "",
+      shelterEmail: "",
       likes: "",
       dislikes: "",
     };
@@ -73,6 +74,12 @@ export default {
         this.likes = data.likes;
         this.dislikes = data.dislike;
         this.shelterImage = data.image;
+        if (doc.get('email') === undefined) {
+          console.log("Shelter has no email!");
+          this.shelterEmail = "exampleemail@gmail.com";
+        } else {
+          this.shelterEmail = data.email;
+        }
       });
     }
   },
@@ -103,8 +110,8 @@ export default {
         shelterSnapshot.forEach((doc) => {
           const data = doc.data();
           doc.ref.update({dislike: data.dislike + 1});
-        });
-      }
+      });
+    }
     },
   },
 };
@@ -118,7 +125,6 @@ export default {
   align-content: center;
   object-fit: cover;
 }
-
 .pet {
   text-align: left;
 }
@@ -126,5 +132,19 @@ export default {
   .flex-container {
     flex-direction: column;
   }
+}
+.btn {
+  background: #2d2b55;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #fad000;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
 }
 </style>
