@@ -7,7 +7,7 @@
       <div class="text">
         <h1>
           {{ shelterName }}
-          <a class="btn" href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
+          <a class="btn" v-bind:href="'mailto:'+shelter.email+'?subject=I want to adopt a pet'">Email Shelter</a>  
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
