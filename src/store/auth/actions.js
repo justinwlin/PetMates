@@ -132,6 +132,7 @@ export default {
 			zipcode: payload.zipcode,
 			likes: 0,
 			dislike: 0,
+			email: payload.email,
 		});
 
 		let filePath = "stores/" + res.id;

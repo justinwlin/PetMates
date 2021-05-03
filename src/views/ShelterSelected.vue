@@ -1,13 +1,16 @@
 <template>
   <div class="home">
-    <div class = "flex-container">
-      <div class = "cover">
+    <div class="flex-container">
+      <div class="cover">
         <img v-bind:src="shelterImage" />
       </div>
       <div class="text">
         <h1>
           {{ shelterName }}
-          <a href="mailto:exampleshelter@gmail.com?subject=I want to adopt a pet">Email Shelter</a>  
+          <a
+            class="btn"
+            v-bind:href="'mailto:'+shelterEmail+'?subject=I want to adopt a pet'"
+          >Email Shelter</a>
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
@@ -27,12 +30,9 @@
           <br />
         </p>
         <div class="pet">
-          <el-button type="primary"
-          v-on:click="checkOutPets()"
-          >CHECK OUT THE PETS</el-button>
+          <el-button type="primary" v-on:click="checkOutPets()">CHECK OUT THE PETS</el-button>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -43,7 +43,7 @@ export default {
   components: {},
   data() {
     return {
-      shelterID:"",
+      shelterID: "",
       shelterImage: "",
       shelterName: "",
       shelterDescription: "",
@@ -51,6 +51,7 @@ export default {
       shelterStreet: "",
       shelterCity: "",
       shelterZipcode: "",
+      shelterEmail: "",
       likes: "",
       dislikes: "",
     };
@@ -59,26 +60,30 @@ export default {
     const shelterSnapshot = await this.$store.dispatch("getShelter", {
       shelterID: this.$store.getters.getSelectedShelter,
     });
-    if (shelterSnapshot.empty) {
-      console.log("No such shelter document!");
-    } else {
-      shelterSnapshot.forEach((doc) => {
-        const data = doc.data();
-        this.shelterID = data.shelterID
-        this.shelterName = data.name;
-        this.shelterState = data.state;
-        this.shelterStreet = data.street;
-        this.shelterCity = data.city;
-        this.shelterZipcode = data.zipcode;
-        this.likes = data.likes;
-        this.dislikes = data.dislike;
-        this.shelterImage = data.image;
-      });
-    }
+    console.log(shelterSnapshot);
+    shelterSnapshot.forEach((doc) => {
+      const data = doc.data();
+      console.log(data);
+      this.shelterID = data.shelterID;
+      this.shelterName = data.name;
+      this.shelterState = data.state;
+      this.shelterStreet = data.street;
+      this.shelterCity = data.city;
+      this.shelterZipcode = data.zipcode;
+      this.likes = data.likes;
+      this.dislikes = data.dislike;
+      this.shelterImage = data.image;
+      if (doc.get("email") === undefined) {
+        console.log("Shelter has no email!");
+        this.shelterEmail = "exampleemail@gmail.com";
+      } else {
+        this.shelterEmail = data.email;
+      }
+    });
   },
-  methods : {
+  methods: {
     async checkOutPets() {
-      this.$store.commit("navigatePage",{ page: "petswipe" });
+      this.$store.commit("navigatePage", { page: "petswipe" });
     },
     async increaseLike() {
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
@@ -89,7 +94,7 @@ export default {
       } else {
         shelterSnapshot.forEach((doc) => {
           const data = doc.data();
-          doc.ref.update({likes: data.likes + 1});
+          doc.ref.update({ likes: data.likes + 1 });
         });
       }
     },
@@ -102,7 +107,7 @@ export default {
       } else {
         shelterSnapshot.forEach((doc) => {
           const data = doc.data();
-          doc.ref.update({dislike: data.dislike + 1});
+          doc.ref.update({ dislike: data.dislike + 1 });
         });
       }
     },
@@ -118,7 +123,6 @@ export default {
   align-content: center;
   object-fit: cover;
 }
-
 .pet {
   text-align: left;
 }
@@ -126,5 +130,19 @@ export default {
   .flex-container {
     flex-direction: column;
   }
+}
+.btn {
+  background: #2d2b55;
+  border-radius: 6px;
+  box-sizing: border-box;
+  color: #fad000;
+  cursor: pointer;
+  display: inline-block;
+  letter-spacing: 1px;
+  margin: 10px 0;
+  padding: 10px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
 }
 </style>
