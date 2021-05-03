@@ -1,20 +1,33 @@
 import { auth, usersdb, storesdb, imgstore } from "../../firebase/config";
 import store from "./../index";
+import axios from "axios";
 export default {
 	async loginUser({ commit }, payload) {
 		console.log(commit);
 		let usercred = null;
 		try {
-			usercred = await auth.signInWithEmailAndPassword(
-				payload.username,
-				payload.password
+			payload = {
+				username: payload.username,
+				password: payload.password,
+			};
+			usercred = await axios.post(
+				"https://pythonseniordesign.herokuapp.com/login",
+				{
+					username: payload.username,
+					password: payload.password,
+				}
 			);
+			usercred = usercred["data"];
+			if (usercred == false) {
+				alert("invalid login");
+				return;
+			}
 		} catch (err) {
 			alert("invalid login");
 			return;
 		}
-		console.log(usercred.user.uid);
-		const doc = await (await usersdb.doc(usercred.user.uid).get()).data();
+		const doc = await (await usersdb.doc(usercred.localId).get()).data();
+		console.log(doc);
 		let shelterID = "";
 		if (doc.shelterID) {
 			shelterID = doc.shelterID;
@@ -23,7 +36,7 @@ export default {
 		commit("customerLogin", {
 			name: doc.name,
 			email: payload.username,
-			uid: usercred.user.uid,
+			uid: usercred.localId,
 			customer: doc.customer,
 		});
 		if (!store.getters.isCustomer) {

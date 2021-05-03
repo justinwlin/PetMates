@@ -20,3 +20,4 @@ yarn-error.log*
 *.sln
 *.sw?
 .vs
+PythonServer/__pycache__/server.cpython-36.pyc
