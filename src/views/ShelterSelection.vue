@@ -12,29 +12,26 @@
         v-for="shelter in shelterData"
         v-bind:key="shelter"
       >
-        <div>
-          <p>Shelter Name</p>
+        <el-col>
           {{ shelter.name }}
-        </div>
-        <div>
-          <p>Shelter Image</p>
-          <div>
-            <img :src="shelter.image" height="150" />
-          </div>
-        </div>
-        <div>
-          <p>Shelter Like</p>
-          {{ shelter.likes }}
-        </div>
-        <div>
-          <p>Shelter Dislike</p>
-          {{ shelter.dislike }}
-        </div>
-        <el-button
-          type="primary"
-          v-on:click="seeShelterDetails(shelter.shelterID)"
-          >See More</el-button
-        >
+        </el-col>
+        <el-col>
+            <img :src="shelter.image"  />
+        </el-col>
+          <el-col >
+              Likes:
+              {{ shelter.likes }}        
+              
+              Disikes:
+              {{ shelter.dislike }}
+          </el-col>
+        <el-col>
+          <el-button
+            type="primary"
+            v-on:click="seeShelterDetails(shelter.shelterID)"
+            >See More
+          </el-button>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -77,12 +74,6 @@ export default {
 </script>
 
 <style scoped>
-.center {
-  display: flex;
-  justify-content: center;
-  margin: 1rem;
-}
-
 .shelter {
   justify-content: center;
   margin: 2rem;
@@ -102,5 +93,13 @@ export default {
   display: flex;
   justify-content: center;
   color: solid black;
+  font-size: 200%;
+}
+
+img {
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-height: 300px;
 }
 </style>
