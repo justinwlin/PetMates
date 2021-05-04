@@ -14,6 +14,7 @@ export default {
 		state.uid = payload.uid;
 		state.iscustomer = payload.customer;
 		state.ownedShelterID = payload.shelterID;
+		state.selectedShelter = payload.shelterID;
 		console.log(state);
 	},
 	setShelterID(state, payload) {
@@ -25,5 +26,5 @@ export default {
 
 	setSelectedShelter(state, payload) {
 		state.selectedShelter = payload.shelterID;
-	}
+	},
 };

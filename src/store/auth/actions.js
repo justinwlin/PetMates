@@ -33,20 +33,28 @@ export default {
 			shelterID = doc.shelterID;
 			commit("setShelterID", { shelterID: shelterID });
 		}
-		commit("customerLogin", {
-			name: doc.name,
-			email: payload.username,
-			uid: usercred.localId,
-			customer: doc.customer,
-		});
+
 		console.log(doc.customer);
 		if (doc.customer) {
 			commit("navigatePage", {
 				page: "shelterselection",
 			});
+			commit("customerLogin", {
+				name: doc.name,
+				email: payload.username,
+				uid: usercred.localId,
+				customer: doc.customer,
+			});
 		} else {
 			commit("navigatePage", {
 				page: "shelterhome",
+			});
+			commit("shelterLogin", {
+				name: doc.name,
+				email: payload.username,
+				uid: usercred.localId,
+				customer: doc.customer,
+				shelterID: doc.shelterID,
 			});
 		}
 	},
