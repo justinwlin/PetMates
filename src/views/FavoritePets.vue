@@ -8,18 +8,22 @@
 
     <div class="petList">
       <el-row class="pet" v-for="pet in petData" v-bind:key="pet">
+        <el-col>{{ pet.name }}</el-col>
         <el-col>
-          {{ pet.name }}
+          <img :src="pet.image" />
         </el-col>
         <el-col>
-          <img :src="pet.image"/>
-        </el-col>
-        <el-col>
-          <el-button type="primary" v-on:click="removeFavorite(pet.petID)"
-            >Delete
-          </el-button>
+          <el-button type="primary" v-on:click="removeFavorite(pet.petID)">Delete</el-button>
+          <el-button @click="grabEmail(pet.shelterID)">Email Shelter</el-button>
         </el-col>
       </el-row>
+    </div>
+    <div id="hidden">
+      <form :action="'mailto:'+shelterEmail" method="GET" ref="email" type="hidden">
+        <input name="subject" type="text" />
+        <textarea name="body"></textarea>
+        <input type="submit" value="Send" />
+      </form>
     </div>
   </div>
 </template>
@@ -34,31 +38,32 @@ export default {
     return {
       petData: [],
       petIDs: [],
+      shelterEmail: "",
     };
   },
   async created() {
-      const snapshot = await this.$store.dispatch("getFavPetsByUID", {
-        uid: this.$store.getters.getUID,
-      });
-      if (snapshot.empty) {
-        console.log('No such user was found');
-      } else {
-        this.petIDs = snapshot.data().favorites;
-       
-        for (let i = 0; i < this.petIDs.length; i++) {
-          const petSnapshot = await this.$store.dispatch("getPetByPetID", {
-            petID: this.petIDs[i], 
+    const snapshot = await this.$store.dispatch("getFavPetsByUID", {
+      uid: this.$store.getters.getUID,
+    });
+    if (snapshot.empty) {
+      console.log("No such user was found");
+    } else {
+      this.petIDs = snapshot.data().favorites;
+
+      for (let i = 0; i < this.petIDs.length; i++) {
+        const petSnapshot = await this.$store.dispatch("getPetByPetID", {
+          petID: this.petIDs[i],
+        });
+        if (petSnapshot.empty) {
+          console.log("No matching pets with that ID found.");
+        } else {
+          petSnapshot.forEach((doc) => {
+            const data = doc.data();
+            this.petData.push(data);
           });
-          if (petSnapshot.empty) {
-            console.log("No matching pets with that ID found.");
-          } else {
-            petSnapshot.forEach((doc) => {
-              const data = doc.data();
-              this.petData.push(data);
-            });
-          }
         }
       }
+    }
   },
 
   computed: {
@@ -73,12 +78,30 @@ export default {
         uid: this.$store.getters.getUID,
       });
       if (snapshot.empty) {
-        console.log('No such user was found');
+        console.log("No such user was found");
       } else {
         snapshot.update({
-          "favorites": firebase.firestore.FieldValue.arrayRemove(petID)
+          favorites: firebase.firestore.FieldValue.arrayRemove(petID),
         });
         console.log(petID);
+      }
+    },
+    async grabEmail(shelterID) {
+      console.log(shelterID);
+      const snapshot = await this.$store.dispatch("getShelter", {
+        shelterID: shelterID,
+      });
+      if (snapshot.empty) {
+        console.log("No such user was found");
+      } else {
+        console.log("EMAILING...");
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          this.shelterEmail = data.email;
+          console.log(data);
+        });
+        console.log(this.shelterEmail);
+        this.$refs.email.submit();
       }
     },
   },
@@ -108,6 +131,9 @@ img {
   max-height: 300px;
 }
 
+#hidden {
+  display: none;
+}
 .PetsTitle {
   display: flex;
   justify-content: center;

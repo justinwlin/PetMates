@@ -82,6 +82,7 @@ export default {
 			email: payload.username,
 			name: payload.name,
 			customer: true,
+			favorites: [],
 		});
 
 		//updating firebase profile name for the user

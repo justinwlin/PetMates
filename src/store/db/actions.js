@@ -1,4 +1,4 @@
-import { petsdb, storesdb, usersdb,imgstore } from "../../firebase/config";
+import { petsdb, storesdb, usersdb, imgstore } from "../../firebase/config";
 export default {
 	async addPets(
 		ctx,
@@ -50,6 +50,7 @@ export default {
 			zipcode,
 			likes,
 			dislike,
+			email,
 		}
 	) {
 		return await storesdb.add({
@@ -63,6 +64,7 @@ export default {
 			likes: likes, //number
 			dislike: dislike, //number
 			image: "", // a string url
+			email: email,
 		});
 	},
 	async getPetByPetID(ctx, { petID }) {
@@ -81,11 +83,12 @@ export default {
 		return await storesdb.get();
 	},
 
-	async getFavPetsByUID(ctx, {uid}) {
+	async getFavPetsByUID(ctx, { uid }) {
 		return await usersdb.doc(uid).get();
 	},
 
-	async getUserDocByUID(ctx, {uid}) { //no get() here, only need the doc
+	async getUserDocByUID(ctx, { uid }) {
+		//no get() here, only need the doc
 		return usersdb.doc(uid);
-	}
+	},
 };
