@@ -1,44 +1,38 @@
 <template>
   <div class="home">
     <!-- SHELTER INFO -->
-    {{shelterData}}
-    <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">
-      <h1>{{ shelter.name }}</h1>
-      <div>{{ shelter.description }}</div>
-      <div>
-        <p>Shelter Like</p>
-        {{ shelter.likes }}
+    <div class="center">
+      <img id="banner" :src="shelterImage" />
+      <h1>{{shelterInfo}}</h1>
+      <p>{{shelterDescription}}</p>
+      <div class="containerLikes">
+        <h3>Likes: {{shelterLikes}} || &nbsp;</h3>
+        <h3>Dislikes: {{shelterDislikes}}</h3>
       </div>
-      <div>
-        <p>Shelter Dislike</p>
-        {{ shelter.dislike }}
-      </div>
-    </el-row>
-    <h1>{{shelterInfo}}</h1>
-    <!-- CHANGE DESCRIPTION -->
-    <p>
-      <el-input v-model="newDescription" placeholder="Change Shelter Description: " />
-    </p>
-    <el-button type="primary" v-on:click="changeDescription()">Change Description</el-button>
-
-    <!-- REMOVE PET -->
-    <p>
+    </div>
+    <div id="descriptionControl">
       <el-input input v-model="removeThisPetID" placeholder="Enter Pet ID: " />
-    </p>
-    <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
-
-    <!-- ADD PET -->
-    <el-button type="primary">Add Pet</el-button>
-    <!-- redirect to add pet form page -->
-
-    <!-- LIST OF PETS -->
-    <div class="petList">
-      <ul id="array-rendering">
-        <li v-for="pet in petData" v-bind:key="pet">
-          {{ pet.name }}
-          {{ pet.description}}
-        </li>
-      </ul>
+      <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
+    </div>
+    <div id="descriptionControl">
+      <p>
+        <el-table :data="petData" style="width: 100%">
+          <el-table-column prop="petID" label="id" width="180"></el-table-column>
+          <el-table-column prop="name" label="name" width="180"></el-table-column>
+          <el-table-column prop="description" label="description" width="180"></el-table-column>
+          <el-table-column label="Name" width="180">
+            <template #default="scope">
+              <el-popover effect="light" trigger="hover" placement="top">
+                <template #reference>
+                  <div class="name-wrapper">
+                    <img id="preview" :src="scope.row.image" />
+                  </div>
+                </template>
+              </el-popover>
+            </template>
+          </el-table-column>
+        </el-table>
+      </p>
     </div>
   </div>
 </template>
@@ -87,6 +81,20 @@ export default {
     shelterInfo() {
       return this.shelterData.length == 0 ? "" : this.shelterData[0].name;
     },
+    shelterDescription() {
+      return this.shelterData.length == 0
+        ? ""
+        : this.shelterData[0].description;
+    },
+    shelterLikes() {
+      return this.shelterData.length == 0 ? "" : this.shelterData[0].likes;
+    },
+    shelterDislikes() {
+      return this.shelterData.length == 0 ? "" : this.shelterData[0].dislike;
+    },
+    shelterImage() {
+      return this.shelterData.length == 0 ? "" : this.shelterData[0].image;
+    },
   },
   methods: {
     async removePet() {
@@ -99,20 +107,13 @@ export default {
         snapshot.forEach((doc) => {
           doc.ref.delete();
         });
-      }
-      return;
-    },
-
-    async changeDescription() {
-      const snapshot = await this.$store.dispatch("getShelter", {
-        shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
-      });
-      if (snapshot.empty) {
-        console.log("No matching shelter with that ID to find.");
-      } else {
-        snapshot.forEach((doc) => {
-          doc.ref.update({ description: this.newDescription });
+        this.petData = this.petData.filter((el) => {
+          if (el.petID != parseInt(this.removeThisPetID)) {
+            return true;
+          }
+          return false;
         });
+        this.removeThisPetID = "";
       }
       return;
     },
@@ -123,15 +124,31 @@ export default {
 <style scoped>
 .center {
   display: flex;
-  justify-content: center;
-  margin: 1rem;
+  flex-direction: column;
+  align-items: center;
 }
-.shelterTools {
+.containerLikes {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin: 2rem;
+}
+
+#descriptionControl {
+  width: 50%;
+  text-align: center;
+  margin: auto;
 }
 .petList {
   outline: 2px solid black;
+}
+
+#banner {
+  height: 300px;
+  width: auto;
+}
+
+#preview {
+  max-height: 200px;
+  max-width: 200px;
 }
 </style>
