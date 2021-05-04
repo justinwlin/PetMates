@@ -7,12 +7,15 @@
       <div class="text">
         <h1>
           {{ shelterName }}
-          <a class="btn" v-bind:href="'mailto:'+shelterEmail+'?subject=I want to adopt a pet'">Email Shelter</a>  
+          <a
+            class="btn"
+            v-bind:href="'mailto:'+shelterEmail+'?subject=I want to adopt a pet'"
+          >Email Shelter</a>
         </h1>
         <div class="like">
           <p>LIKES : {{ likes }} DISLIKES: {{ dislikes }}</p>
-          <el-button type="primary" v-on:click="increaseLike()">Like</el-button>
-          <el-button type="primary" v-on:click="increaseDislike()">Dislike</el-button>
+          <el-button type="primary" :disabled="likestate" v-on:click="increaseLike()">Like</el-button>
+          <el-button type="primary" :disabled="dislikesstate" v-on:click="increaseDislike()">Dislike</el-button>
         </div>
         <p>
           {{ shelterDescription }}
@@ -50,7 +53,9 @@ export default {
       shelterZipcode: "",
       shelterEmail: "",
       likes: "",
+      likestate: false,
       dislikes: "",
+      dislikesstate: false,
     };
   },
   async created() {
@@ -83,6 +88,8 @@ export default {
       this.$store.commit("navigatePage", { page: "petswipe" });
     },
     async increaseLike() {
+      this.likes += 1;
+      this.likestate = true;
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
         shelterID: this.$store.getters.getSelectedShelter,
       });
@@ -96,6 +103,8 @@ export default {
       }
     },
     async increaseDislike() {
+      this.dislikes += 1;
+      this.dislikesstate = true;
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
         shelterID: this.$store.getters.getSelectedShelter,
       });
