@@ -8,19 +8,17 @@
 
     <div class="petList">
       <el-row class="pet" v-for="pet in petData" v-bind:key="pet">
-        <div>
-          <p>Pet Name</p>
+        <el-col>
           {{ pet.name }}
-        </div>
-        <div>
-          <p>Pet Image</p>
-          <div>
-            <img :src="pet.image" height="150" />
-          </div>
-        </div>
-        <el-button type="primary" v-on:click="removeFavorite(pet.petID)"
-          >Delete</el-button
-        >
+        </el-col>
+        <el-col>
+          <img :src="pet.image"/>
+        </el-col>
+        <el-col>
+          <el-button type="primary" v-on:click="removeFavorite(pet.petID)"
+            >Delete
+          </el-button>
+        </el-col>
       </el-row>
     </div>
   </div>
@@ -62,6 +60,7 @@ export default {
         }
       }
   },
+
   computed: {
     stateCheck() {
       return this.$store.state;
@@ -87,4 +86,32 @@ export default {
 </script>
 
 <style scoped>
+.pet {
+  justify-content: center;
+  margin: 2rem;
+  min-width: 25%;
+  max-width: 25%;
+}
+
+.petList {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  color: solid black;
+}
+
+img {
+  min-height: 300px;
+  max-height: 300px;
+  min-width: 300px;
+  max-height: 300px;
+}
+
+.PetsTitle {
+  display: flex;
+  justify-content: center;
+  color: solid black;
+  font-size: 200%;
+}
 </style>
