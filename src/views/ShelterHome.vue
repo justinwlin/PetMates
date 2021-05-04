@@ -1,13 +1,10 @@
 <template>
   <div class="home">
     <!-- SHELTER INFO -->
+    {{shelterData}}
     <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">
-      >
-      <div>{{ shelter.name }}</div>
-      <div>
-        <p>Shelter Description</p>
-        {{ shelter.description }}
-      </div>
+      <h1>{{ shelter.name }}</h1>
+      <div>{{ shelter.description }}</div>
       <div>
         <p>Shelter Like</p>
         {{ shelter.likes }}
@@ -17,7 +14,7 @@
         {{ shelter.dislike }}
       </div>
     </el-row>
-
+    <h1>{{shelterInfo}}</h1>
     <!-- CHANGE DESCRIPTION -->
     <p>
       <el-input v-model="newDescription" placeholder="Change Shelter Description: " />
@@ -86,6 +83,9 @@ export default {
   computed: {
     stateCheck() {
       return this.$store.state;
+    },
+    shelterInfo() {
+      return this.shelterData.length == 0 ? "" : this.shelterData[0].name;
     },
   },
   methods: {

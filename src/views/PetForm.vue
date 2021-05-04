@@ -6,7 +6,7 @@
       <!-- Pet Image Upload -->
       <p>Pet Image Upload</p>
       <div>
-        <input type="file" @change="onFileChanged" />
+        <input type="file" ref="fileupload" @change="onFileChanged" />
       </div>
       <div>
         <img :src="imagebase64" height="150" />
@@ -119,6 +119,7 @@ export default {
           year: parseInt(this.petAgeYear),
           name: this.petname,
         });
+        this.$refs.fileupload.value = null;
         Object.assign(this.$data, this.clearForm());
       } catch (err) {
         console.log(err);
