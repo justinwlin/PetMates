@@ -16,7 +16,9 @@
           {{ shelter.name }}
         </el-col>
         <el-col>
+          <div class="container">
             <img :src="shelter.image"  />
+          </div>
         </el-col>
           <el-col >
               Likes:
@@ -96,10 +98,14 @@ export default {
   font-size: 200%;
 }
 
+.container {
+  max-width: 400px;
+  min-width: 250px;
+  border:  turquoise 1px;
+}
+
 img {
-  min-height: 300px;
-  max-height: 300px;
-  min-width: 300px;
-  max-height: 300px;
+  width: 100%;
+
 }
 </style>
