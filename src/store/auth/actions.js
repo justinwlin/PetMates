@@ -39,7 +39,8 @@ export default {
 			uid: usercred.localId,
 			customer: doc.customer,
 		});
-		if (!store.getters.isCustomer) {
+		console.log(doc.customer);
+		if (doc.customer) {
 			commit("navigatePage", {
 				page: "shelterselection",
 			});

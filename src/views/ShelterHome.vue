@@ -3,13 +3,7 @@
     <!-- SHELTER INFO -->
     <el-row class="shelterTools" v-for="shelter in shelterData" v-bind:key="shelter">
       >
-      <div>
-        <p>Shelter Name</p>
-        {{ shelter.name }}
-      </div>
-      <div>
-        <p>Shelter Image</p>
-      </div>
+      <div>{{ shelter.name }}</div>
       <div>
         <p>Shelter Description</p>
         {{ shelter.description }}
@@ -26,13 +20,13 @@
 
     <!-- CHANGE DESCRIPTION -->
     <p>
-      <input v-model="newDescription" placeholder="Change Shelter Description: " />
+      <el-input v-model="newDescription" placeholder="Change Shelter Description: " />
     </p>
     <el-button type="primary" v-on:click="changeDescription()">Change Description</el-button>
 
     <!-- REMOVE PET -->
     <p>
-      <input v-model="removeThisPetID" placeholder="Enter Pet ID: " />
+      <el-input input v-model="removeThisPetID" placeholder="Enter Pet ID: " />
     </p>
     <el-button type="primary" v-on:click="removePet()">Remove Pet</el-button>
 
@@ -49,7 +43,6 @@
         </li>
       </ul>
     </div>
-
   </div>
 </template>
 
@@ -68,23 +61,23 @@ export default {
   created() {
     (async () => {
       const petSnapshot = await this.$store.dispatch("getPetsInShelter", {
-        shelterID: this.$store.getters.getSelectedShelter,                  
+        shelterID: this.$store.getters.getSelectedShelter,
       });
       const shelterSnapshot = await this.$store.dispatch("getShelter", {
         shelterID: this.$store.getters.getSelectedShelter,
       });
 
       if (petSnapshot.empty) {
-        console.log('No such pet document!');
+        console.log("No such pet document!");
       } else {
-        petSnapshot.forEach(doc => {
+        petSnapshot.forEach((doc) => {
           this.petData.push(doc.data());
         });
       }
       if (shelterSnapshot.empty) {
-        console.log('No such shelter document!');
+        console.log("No such shelter document!");
       } else {
-        shelterSnapshot.forEach(doc => {
+        shelterSnapshot.forEach((doc) => {
           this.shelterData.push(doc.data());
         });
       }
@@ -98,12 +91,12 @@ export default {
   methods: {
     async removePet() {
       const snapshot = await this.$store.dispatch("getPetByPetID", {
-        petID: parseInt(this.removeThisPetID)
+        petID: parseInt(this.removeThisPetID),
       });
       if (snapshot.empty) {
-        console.log('No matching pets with that ID to be removed.');
+        console.log("No matching pets with that ID to be removed.");
       } else {
-        snapshot.forEach(doc => {
+        snapshot.forEach((doc) => {
           doc.ref.delete();
         });
       }
@@ -112,18 +105,18 @@ export default {
 
     async changeDescription() {
       const snapshot = await this.$store.dispatch("getShelter", {
-        shelterID: 1,                   //need persistence of pet shelter first. Code as 1 for now
+        shelterID: 1, //need persistence of pet shelter first. Code as 1 for now
       });
       if (snapshot.empty) {
-        console.log('No matching shelter with that ID to find.');
+        console.log("No matching shelter with that ID to find.");
       } else {
-        snapshot.forEach(doc => {
-          doc.ref.update({description: this.newDescription});
+        snapshot.forEach((doc) => {
+          doc.ref.update({ description: this.newDescription });
         });
       }
       return;
     },
-  }
+  },
 };
 </script>
 
