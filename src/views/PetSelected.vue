@@ -12,7 +12,6 @@
         <th>Month</th>
         <th>Day</th>
         <th>Year</th>
-        <th>Special Needs</th>
         <th>Neutered</th>
         <th>Notes</th>
         <th>Special Needs</th>
@@ -23,7 +22,6 @@
         <td>{{petData.month}}</td>
         <td>{{petData.day}}</td>
         <td>{{petData.year}}</td>
-        <td>{{petData.specialNeeds}}</td>
         <td>{{petData.neutered}}</td>
         <td>{{petData.notes}}</td>
         <td>{{petData.specialneeds}}</td>
