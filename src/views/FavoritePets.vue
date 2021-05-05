@@ -14,6 +14,8 @@
         </el-col>
         <el-col>
           <el-button type="primary" v-on:click="removeFavorite(pet.petID)">Delete</el-button>
+          <el-button type="info" @click="seeMore(pet.petID)">See more info</el-button>
+
           <el-button @click="grabEmail(pet.shelterID)">Email Shelter</el-button>
         </el-col>
       </el-row>
@@ -73,6 +75,15 @@ export default {
   },
 
   methods: {
+    async seeMore(petID) {
+      await this.grabEmail(petID);
+      this.$store.commit("setSelectedPetID", {
+        petID: petID,
+        email: this.shelterEmail,
+      });
+
+      this.$store.commit("navigatePage", { page: "petselected" });
+    },
     async removeFavorite(petID) {
       const snapshot = await this.$store.dispatch("getUserDocByUID", {
         uid: this.$store.getters.getUID,
@@ -83,6 +94,12 @@ export default {
         snapshot.update({
           favorites: firebase.firestore.FieldValue.arrayRemove(petID),
         });
+        this.petData = this.petData.filter((el) => {
+          if (el.petID != petID) {
+            return true;
+          }
+        });
+
         console.log(petID);
       }
     },

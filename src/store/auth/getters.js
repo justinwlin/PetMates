@@ -14,4 +14,7 @@ export default {
 	getUID(state) {
 		return state.uid;
 	},
+	getSelectedPet(state) {
+		return state.selectedPetID;
+	},
 };

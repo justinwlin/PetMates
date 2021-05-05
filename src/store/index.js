@@ -15,6 +15,7 @@ export default createStore({
 		selectedShelter: 1, //shelterID
 		ownedShelterID: 1,
 		selectedPetID: 1,
+		selectedEmail: "",
 		page: "",
 	},
 	mutations: {

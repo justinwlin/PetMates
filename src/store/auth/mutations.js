@@ -27,4 +27,8 @@ export default {
 	setSelectedShelter(state, payload) {
 		state.selectedShelter = payload.shelterID;
 	},
+	setSelectedPetID(state, payload) {
+		state.selectedPetID = payload.petID;
+		state.selectedEmail = payload.email;
+	},
 };
